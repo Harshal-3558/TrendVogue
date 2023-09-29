@@ -1,14 +1,19 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { React, useState } from "react";
+import { React, useContext, useState } from "react";
 import { FaStar, FaLocationDot } from "react-icons/fa6";
+const mongoose = require("mongoose");
+import product from "@/models/product";
 
-export default function Page() {
+export default function Page({ product, variant }) {
+  console.log(product, variant);
   const router = useRouter();
   const slug = router.query.slug;
-  // console.log(slug);
   const [pin, setPin] = useState("");
   const [service, setService] = useState(null);
+  const [color, setColor] = useState(product.color);
+  console.log(product.color);
+  const [size, setSize] = useState(product.size);
   const handleService = async () => {
     let pins = await fetch("http://localhost:3000/api/pincode");
     let pinJSON = await pins.json();
@@ -21,6 +26,14 @@ export default function Page() {
   const changePin = (e) => {
     setPin(e.target.value);
   };
+  const refreshVariant = (newColor, newSize) => {
+    router.push(
+      `http://localhost:3000/product/${variant[newColor][newSize]["slug"]}`
+    );
+    setColor(newColor);
+    setSize(newSize);
+    // router.reload()
+  };
   return (
     <div className="py-12">
       <div className="flex justify-center space-x-12">
@@ -31,22 +44,22 @@ export default function Page() {
             width={1200}
             height={800}
             alt="product"
-            src="https://images.bewakoof.com/t1080/men-s-green-more-cheese-graphic-printed-oversized-t-shirt-591331-1685599676-1.jpg"
+            src={product.img}
           ></Image>
         </div>
 
         {/* Section #2 */}
         <div className="space-y-4">
           <div>
-            <p className="text-xl font-semibold text-slate-600">Bewakoof</p>
-            <p className="text-lg text-slate-500">Mens Black Hope T-shirt</p>
+            <p className="text-xl font-semibold text-slate-600">{product.brand}</p>
+            <p className="text-lg text-slate-500">{product.description}</p>
           </div>
           <div className="flex items-center justify-center space-x-1 border-2 w-14 bg-slate-200 rounded-lg">
             <FaStar className="text-yellow-400" />
-            <span>4.6</span>
+            <span>{product.rating}</span>
           </div>
           <div>
-            <p className="text-2xl font-bold">₹599</p>
+            <p className="text-2xl font-bold">₹{product.price}</p>
             <p className="text-xs text-slate-400">inclusive of all taxes</p>
           </div>
           <div className=" border-y-4 py-4">
@@ -58,31 +71,110 @@ export default function Page() {
           <div>
             <p className="font-semibold">COLOR OPTIONS :</p>
             <div className="flex space-x-3">
-              <div className=" h-12 w-12 bg-green-500 rounded-full border-4"></div>
-              <div className=" h-12 w-12 bg-red-500 rounded-full border-4"></div>
+              {Object.keys(variant).includes("white") &&
+                Object.keys(variant["white"]).includes(size) && (
+                  <button
+                    onClick={() => {
+                      refreshVariant("white", size);
+                    }}
+                    className={` h-12 w-12 bg-white rounded-full border-4 ${
+                      color === "white" ? "border-gray-400" : "border-slate-100"
+                    }`}
+                  ></button>
+                )}
+              {Object.keys(variant).includes("black") &&
+                Object.keys(variant["black"]).includes(size) && (
+                  <button
+                    onClick={() => {
+                      refreshVariant("black", size);
+                    }}
+                    className={` h-12 w-12 bg-black rounded-full border-4 ${
+                      color === "black" ? "border-gray-400" : "border-slate-100"
+                    }`}
+                  ></button>
+                )}
+              {Object.keys(variant).includes("red") &&
+                Object.keys(variant["red"]).includes(size) && (
+                  <button
+                    onClick={() => {
+                      refreshVariant("red", size);
+                    }}
+                    className={` h-12 w-12 bg-red-500 rounded-full border-4 ${
+                      color === "red" ? "border-gray-400" : "border-slate-100"
+                    }`}
+                  ></button>
+                )}
+              {Object.keys(variant).includes("blue") &&
+                Object.keys(variant["blue"]).includes(size) && (
+                  <button
+                    onClick={() => {
+                      refreshVariant("blue", size);
+                    }}
+                    className={` h-12 w-12 bg-blue-500 rounded-full border-4 ${
+                      color === "blue" ? "border-gray-400" : "border-slate-100"
+                    }`}
+                  ></button>
+                )}
             </div>
           </div>
           <div>
             <p className="font-semibold">SELECT SIZE :</p>
             <div className="flex space-x-3">
-              <div className=" h-12 w-12 border-slate-200 rounded-lg border-4 text-xl flex justify-center items-center">
-                <p>S</p>
-              </div>
-              <div className=" h-12 w-12 border-slate-200 rounded-lg border-4 text-xl flex justify-center items-center">
-                <p>M</p>
-              </div>
-              <div className=" h-12 w-12 border-slate-200 rounded-lg border-4 text-xl flex justify-center items-center">
-                <p>L</p>
-              </div>
-              <div className=" h-12 w-12 border-slate-200 rounded-lg border-4 text-xl flex justify-center items-center">
-                <p>XL</p>
-              </div>
-              <div className=" h-12 w-12 border-slate-200 rounded-lg border-4 text-xl flex justify-center items-center">
-                <p>2XL</p>
-              </div>
-              <div className=" h-12 w-12 border-slate-200 rounded-lg border-4 text-xl flex justify-center items-center">
-                <p>3XL</p>
-              </div>
+              {Object.keys(variant[color]).includes("S") && (
+                <button  onClick={() => {
+                      refreshVariant(color, "S");
+                    }}
+                  className={` h-12 w-12 ${
+                    size === "S" ? "border-gray-400" : "border-slate-100"
+                  } rounded-lg border-4 text-xl flex justify-center items-center`}
+                >
+                  <p>S</p>
+                </button>
+              )}
+              {Object.keys(variant[color]).includes("M") && (
+                <button  onClick={() => {
+                      refreshVariant(color, "M");
+                    }}
+                  className={` h-12 w-12 ${
+                    size === "M" ? "border-gray-400" : "border-slate-100"
+                  } rounded-lg border-4 text-xl flex justify-center items-center`}
+                >
+                  <p>M</p>
+                </button>
+              )}
+              {Object.keys(variant[color]).includes("L") && (
+                <button  onClick={() => {
+                      refreshVariant(color, "L");
+                    }}
+                  className={` h-12 w-12 ${
+                    size === "L" ? "border-gray-400" : "border-slate-100"
+                  } rounded-lg border-4 text-xl flex justify-center items-center`}
+                >
+                  <p>L</p>
+                </button>
+              )}
+              {Object.keys(variant[color]).includes("XL") && (
+                <button  onClick={() => {
+                      refreshVariant(color, "XL");
+                    }}
+                  className={` h-12 w-12 ${
+                    size === "XL" ? "border-gray-400" : "border-slate-100"
+                  } rounded-lg border-4 text-xl flex justify-center items-center`}
+                >
+                  <p>XL</p>
+                </button>
+              )}
+              {Object.keys(variant[color]).includes("2XL") && (
+                <button  onClick={() => {
+                  refreshVariant(color, "2XL");
+                }}
+                  className={` h-12 w-12 ${
+                    size === "2XL" ? "border-gray-400" : "border-slate-100"
+                  } rounded-lg border-4 text-xl flex justify-center items-center`}
+                >
+                  <p>2XL</p>
+                </button>
+              )}
             </div>
           </div>
           <div className="space-x-3 border-b-4 py-4">
@@ -130,8 +222,25 @@ export default function Page() {
   );
 }
 
-export async function getStaticProps() {
-  const res = await fetch("http://localhost:3000/api/getProduct");
-  const products = await res.json();
-  return { props: products };
+export async function getServerSideProps(context) {
+  if (!mongoose.connections[0].readyState) {
+    await mongoose.connect(process.env.MONGO_URI);
+  }
+  let products = await product.findOne({ slug: context.query.slug });
+  let variants = await product.find({ description: products.description });
+  let colorSizeSlug = {}; //{red:{xl:{slug:'wear-the-code-xl'}}}
+  for (let item of variants) {
+    if (Object.keys(colorSizeSlug).includes(item.color)) {
+      colorSizeSlug[item.color][item.size] = { slug: item.slug, img: item.img };
+    } else {
+      colorSizeSlug[item.color] = {};
+      colorSizeSlug[item.color][item.size] = { slug: item.slug, img: item.img };
+    }
+  }
+  return {
+    props: {
+      product: JSON.parse(JSON.stringify(products)),
+      variant: JSON.parse(JSON.stringify(colorSizeSlug)),
+    },
+  };
 }

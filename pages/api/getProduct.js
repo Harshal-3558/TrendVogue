@@ -26,7 +26,7 @@ const handler = async (req, res) => {
       }
     }
   }
-  res.status(200).json( {products} );
+  res.status(200).json( tshirt );
 };
 
 export default connectDB(handler); //To check whether connected to DB or not and then it is returned
