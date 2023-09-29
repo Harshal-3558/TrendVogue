@@ -5,14 +5,13 @@ import { FaStar, FaLocationDot } from "react-icons/fa6";
 const mongoose = require("mongoose");
 import product from "@/models/product";
 
-export default function Page({ product, variant }) {
-  console.log(product, variant);
+export default function Page({ product, variant, addCart }) {
+  // console.log(product, variant);
   const router = useRouter();
   const slug = router.query.slug;
   const [pin, setPin] = useState("");
   const [service, setService] = useState(null);
   const [color, setColor] = useState(product.color);
-  console.log(product.color);
   const [size, setSize] = useState(product.size);
   const handleService = async () => {
     let pins = await fetch("http://localhost:3000/api/pincode");
@@ -51,7 +50,9 @@ export default function Page({ product, variant }) {
         {/* Section #2 */}
         <div className="space-y-4">
           <div>
-            <p className="text-xl font-semibold text-slate-600">{product.brand}</p>
+            <p className="text-xl font-semibold text-slate-600">
+              {product.brand}
+            </p>
             <p className="text-lg text-slate-500">{product.description}</p>
           </div>
           <div className="flex items-center justify-center space-x-1 border-2 w-14 bg-slate-200 rounded-lg">
@@ -121,9 +122,10 @@ export default function Page({ product, variant }) {
             <p className="font-semibold">SELECT SIZE :</p>
             <div className="flex space-x-3">
               {Object.keys(variant[color]).includes("S") && (
-                <button  onClick={() => {
-                      refreshVariant(color, "S");
-                    }}
+                <button
+                  onClick={() => {
+                    refreshVariant(color, "S");
+                  }}
                   className={` h-12 w-12 ${
                     size === "S" ? "border-gray-400" : "border-slate-100"
                   } rounded-lg border-4 text-xl flex justify-center items-center`}
@@ -132,9 +134,10 @@ export default function Page({ product, variant }) {
                 </button>
               )}
               {Object.keys(variant[color]).includes("M") && (
-                <button  onClick={() => {
-                      refreshVariant(color, "M");
-                    }}
+                <button
+                  onClick={() => {
+                    refreshVariant(color, "M");
+                  }}
                   className={` h-12 w-12 ${
                     size === "M" ? "border-gray-400" : "border-slate-100"
                   } rounded-lg border-4 text-xl flex justify-center items-center`}
@@ -143,9 +146,10 @@ export default function Page({ product, variant }) {
                 </button>
               )}
               {Object.keys(variant[color]).includes("L") && (
-                <button  onClick={() => {
-                      refreshVariant(color, "L");
-                    }}
+                <button
+                  onClick={() => {
+                    refreshVariant(color, "L");
+                  }}
                   className={` h-12 w-12 ${
                     size === "L" ? "border-gray-400" : "border-slate-100"
                   } rounded-lg border-4 text-xl flex justify-center items-center`}
@@ -154,9 +158,10 @@ export default function Page({ product, variant }) {
                 </button>
               )}
               {Object.keys(variant[color]).includes("XL") && (
-                <button  onClick={() => {
-                      refreshVariant(color, "XL");
-                    }}
+                <button
+                  onClick={() => {
+                    refreshVariant(color, "XL");
+                  }}
                   className={` h-12 w-12 ${
                     size === "XL" ? "border-gray-400" : "border-slate-100"
                   } rounded-lg border-4 text-xl flex justify-center items-center`}
@@ -165,9 +170,10 @@ export default function Page({ product, variant }) {
                 </button>
               )}
               {Object.keys(variant[color]).includes("2XL") && (
-                <button  onClick={() => {
-                  refreshVariant(color, "2XL");
-                }}
+                <button
+                  onClick={() => {
+                    refreshVariant(color, "2XL");
+                  }}
                   className={` h-12 w-12 ${
                     size === "2XL" ? "border-gray-400" : "border-slate-100"
                   } rounded-lg border-4 text-xl flex justify-center items-center`}
@@ -178,7 +184,20 @@ export default function Page({ product, variant }) {
             </div>
           </div>
           <div className="space-x-3 border-b-4 py-4">
-            <button className="bg-red-500 px-5 py-2 text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300">
+            <button
+              onClick={() => {
+                addCart(
+                  slug,
+                  product.description,
+                  1,
+                  color,
+                  size,
+                  product.price,
+                  product.img
+                );
+              }}
+              className="bg-red-500 px-5 py-2 text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300"
+            >
               ADD TO CART
             </button>
             <button className="bg-red-500 px-5 py-2 text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300">
