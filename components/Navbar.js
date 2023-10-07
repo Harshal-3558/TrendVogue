@@ -14,10 +14,19 @@ import {
   FaTicket,
   FaGear,
   FaArrowRightFromBracket,
+  FaBagShopping,
 } from "react-icons/fa6";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
-export default function Navbar() {
+export default function Navbar({ user, logout }) {
+  const [drop, setDrop] = useState(false);
+  function toggleDropdown() {
+    if (!drop) {
+      setDrop(true);
+    } else {
+      setDrop(false);
+    }
+  }
   const ref = useRef();
   const toggleCart = () => {
     if (ref.current.classList.contains("-translate-x-full")) {
@@ -89,11 +98,56 @@ export default function Navbar() {
                 <FaMagnifyingGlass />
               </button>
             </div>
-            <Link href="/login">
-              <FaCircleUser className="text-3xl" />
-            </Link>
+
+            {/* Login & Logout */}
+            {user.value ? (
+              <FaCircleUser
+                className="text-3xl hover:text-red-500 cursor-pointer"
+                onClick={toggleDropdown}
+              />
+            ) : (
+              <Link href="/login">
+                <button className="bg-red-500 px-6 py-1 text-lg text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300">
+                  Login
+                </button>
+              </Link>
+            )}
+
+            {/* Dropdown Menu */}
+            {drop && (
+              <div className="absolute top-16 right-5 rounded-lg shadow-2xl shadow-gray-400 h-44 w-44 text-lg p-4 space-y-2 bg-slate-200">
+                <Link
+                  href={"/account"}
+                  className="flex space-x-3 items-center hover:text-red-500 cursor-pointer"
+                >
+                  <FaUser />
+                  <p>My Account</p>
+                </Link>
+                <Link
+                  href={"/myOrders"}
+                  className="flex space-x-3 items-center hover:text-red-500 cursor-pointer"
+                >
+                  <FaBagShopping />
+                  <p>My Orders</p>
+                </Link>
+                <div className="flex space-x-3 items-center hover:text-red-500 cursor-pointer">
+                  <FaGear />
+                  <p>Settings</p>
+                </div>
+                <div
+                  className="flex space-x-3 items-center hover:text-red-500 cursor-pointer"
+                  onClick={() => {
+                    toggleDropdown();
+                    logout();
+                  }}
+                >
+                  <FaArrowRightFromBracket />
+                  <p>Log Out</p>
+                </div>
+              </div>
+            )}
             <Link href={"/cart"}>
-              <FaCartShopping className="text-3xl" />
+              <FaCartShopping className="text-3xl hover:text-red-500 cursor-pointer" />
             </Link>
           </div>
         </div>

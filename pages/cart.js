@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 function Cart({ user, cart, total, addCart, clearCart, removeFromCart }) {
-  console.log(cart);
+  // console.log(cart);
   return (
     <>
       <div className="md:flex md:m-2">

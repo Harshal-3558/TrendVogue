@@ -1,10 +1,64 @@
 import Link from "next/link";
-import React from "react";
+import { React, useContext, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function signUp() {
+function SignUp() {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  function handleChange(e) {
+    if (e.target.name == "email") {
+      setEmail(e.target.value);
+    } else if (e.target.name == "name") {
+      setName(e.target.value);
+    } else if (e.target.name == "password") {
+      setPassword(e.target.value);
+    }
+  }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const data = { email, name, password };
+    const response = await fetch("http://localhost:3000/api/signUp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    let res = await response.json();
+    console.log(res);
+    if (res.success === "Success") {
+      toast.success("Your account is created", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+    setEmail("");
+    setName("");
+    setPassword("");
+  }
   return (
     <>
       <div className="flex justify-center">
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover={false}
+          theme="colored"
+        />
         <div className="p-2 border my-16 bg-white rounded-lg shadow-lg md:w-1/2 md:p-5">
           <div className="space-y-3">
             <h1 className="text-2xl text-center font-bold md:text-3xl">
@@ -13,19 +67,22 @@ function signUp() {
             <p className="text-center font-semibold">
               Already have an account?{" "}
               <Link className="text-red-600" href={"/login"}>
-                Sign in here
+                Login here
               </Link>
             </p>
           </div>
-          <div className="flex items-center py-3 text-xs uppercase text-gray-400 before:mr-6 before:flex-[1_1_0%] before:border-t before:border-gray-200 after:ml-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 ">
-            Or
-          </div>
-          <form action="" className="px-2 space-y-5 text-base md:text-lg">
+          <form
+            onSubmit={handleSubmit}
+            method="POST"
+            className="px-2 space-y-5 text-base md:text-lg"
+          >
             <div>
               <label className="block" for="name">
                 Email address
               </label>
               <input
+                onChange={handleChange}
+                value={email}
                 type="email"
                 name="email"
                 id="email"
@@ -38,6 +95,8 @@ function signUp() {
                 Name
               </label>
               <input
+                onChange={handleChange}
+                value={name}
                 type="text"
                 name="name"
                 id="name"
@@ -50,6 +109,8 @@ function signUp() {
                 Password
               </label>
               <input
+                onChange={handleChange}
+                value={password}
                 type="password"
                 name="password"
                 id="password"
@@ -79,4 +140,4 @@ function signUp() {
   );
 }
 
-export default signUp;
+export default SignUp;

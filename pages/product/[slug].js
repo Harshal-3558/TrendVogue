@@ -4,9 +4,20 @@ import { React, useContext, useState } from "react";
 import { FaStar, FaLocationDot } from "react-icons/fa6";
 const mongoose = require("mongoose");
 import product from "@/models/product";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export default function Page({ product, variant, addCart }) {
-  // console.log(product, variant);
+export default function Page({
+  product,
+  variant,
+  user,
+  cart,
+  total,
+  addCart,
+  clearCart,
+  removeFromCart,
+  buyNow,
+}) {
   const router = useRouter();
   const slug = router.query.slug;
   const [pin, setPin] = useState("");
@@ -35,6 +46,18 @@ export default function Page({ product, variant, addCart }) {
   };
   return (
     <div className="py-12">
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="colored"
+      />
       <div className="flex justify-center space-x-12">
         {/* Section #1 */}
         <div className="h-[600px] w-[400px]">
@@ -195,12 +218,35 @@ export default function Page({ product, variant, addCart }) {
                   product.price,
                   product.img
                 );
+                toast.success("Item added to cart", {
+                  position: "top-center",
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: false,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "colored",
+                });
               }}
               className="bg-red-500 px-5 py-2 text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300"
             >
               ADD TO CART
             </button>
-            <button className="bg-red-500 px-5 py-2 text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300">
+            <button
+              onClick={() => {
+                buyNow(
+                  slug,
+                  product.description,
+                  1,
+                  color,
+                  size,
+                  product.price,
+                  product.img
+                );
+              }}
+              className="bg-red-500 px-5 py-2 text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300"
+            >
               BUY NOW
             </button>
           </div>

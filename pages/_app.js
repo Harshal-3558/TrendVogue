@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import "@/styles/globals.css";
 import { Nunito } from "next/font/google";
 import { React, useContext, useState, useEffect } from "react";
+import LoadingBar from "react-top-loading-bar";
 import { useRouter } from "next/router";
 const nunito = Nunito({
   weight: "400",
@@ -14,10 +15,17 @@ export default function App({ Component, pageProps }) {
   const [cart, setCart] = useState({});
   const [total, setTotal] = useState(0);
   const [user, setUser] = useState({ value: null });
-  const [key, setKey] = useState();
+  const [key, setKey] = useState(0);
+  const [progress, setProgress] = useState(0); //Top loading bar
   const router = useRouter();
 
   useEffect(() => {
+    router.events.on("routeChangeStart", () => {
+      setProgress(40); // Above function is used to update progress when routing is completed
+    });
+    router.events.on("routeChangeComplete", () => {
+      setProgress(100); // Above function is used to update progress when routing is completed
+    });
     try {
       if (localStorage.getItem("cart")) {
         setCart(JSON.parse(localStorage.getItem("cart")));
@@ -31,9 +39,16 @@ export default function App({ Component, pageProps }) {
     const token = localStorage.getItem("token");
     if (token) {
       setUser({ value: token });
-      setKey(Math.random());
+      setKey(Math.random()); //used to re-render the component
     }
-  }, [router.query]); //since useEffect will not run due to router.push
+  }, [router.query]); //since useEffect will not run due to router.push hence used router.query
+
+  //Logout
+  const logout = () => {
+    localStorage.removeItem("token");
+    setUser({ value: null });
+    setKey(Math.random()); //used to re-render the component
+  };
 
   // Add to Cart
   const addCart = (itemCode, desc, qty, color, size, price, img) => {
@@ -78,17 +93,26 @@ export default function App({ Component, pageProps }) {
   };
 
   //Buy Now
-  const buyNow = (itemCode, desc, qty, color, size, price) => {
-    let newCart = { itemCode: { qty: 1, price, desc, size, color } };
+  const buyNow = (itemCode, desc, qty, color, size, price, img) => {
+    let newCart = { itemCode: { qty: 1, price, desc, size, color, img } };
     setCart(newCart);
     saveCart(newCart);
-    router.push("/checkout");
+    router.push("/orders");
   };
   return (
     <>
       <main className={nunito.className}>
+        {/* Loding Bar */}
+        <LoadingBar
+          color="#f11946"
+          height={3}
+          progress={progress}
+          onLoaderFinished={() => setProgress(0)}
+        />
         <Navbar
+          logout={logout}
           user={user}
+          key={key}
           cart={cart}
           total={total}
           addCart={addCart}

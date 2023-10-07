@@ -1,6 +1,13 @@
 import React from "react";
 
-export default function orders() {
+export default function orders({
+  user,
+  cart,
+  total,
+  addCart,
+  clearCart,
+  removeFromCart,
+}) {
   return (
     <div className="p-4 space-y-4">
       {/* DELIVERY ADDRESS */}
@@ -64,25 +71,20 @@ export default function orders() {
           <p>ORDER SUMMARY</p>
         </div>
         <div className="p-5 space-y-2">
-          <div className="w-96 flex justify-between">
-            <p>Mens Black Hope T-shirt</p>
-            <p>₹599</p>
-          </div>
-          <div className="w-96 flex justify-between">
-            <p>Mens Black Hope T-shirt</p>
-            <p>₹599</p>
-          </div>
-          <div className="w-96 flex justify-between">
-            <p>Mens Black Hope T-shirt</p>
-            <p>₹599</p>
-          </div>
-          <div className="w-96 flex justify-between">
-            <p>Tax</p>
-            <p>₹599</p>
-          </div>
+          {Object.keys(cart).map((k) => {
+            return (
+              <div
+                key={cart[k].desc}
+                className="w-96 flex space-x-5 justify-between"
+              >
+                <p>{cart[k].desc}</p>
+                <p>₹{cart[k].price}</p>
+              </div>
+            );
+          })}
           <div className="w-96 flex justify-between border-y-2 border-slate-600 py-2">
             <p className="font-bold">Total</p>
-            <p className="font-bold">₹5000</p>
+            <p className="font-bold">₹{total}</p>
           </div>
           <div className="pt-5">
             <button className="bg-red-500 px-5 py-2 text-white text-sm rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300">
