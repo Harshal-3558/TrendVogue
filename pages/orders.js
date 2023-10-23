@@ -15,8 +15,8 @@ export default function orders({
         <div className="bg-red-500 h-8 text-white flex items-center pl-2 rounded-t-lg">
           <p>DELIVERY ADDRESS</p>
         </div>
-        <div className="p-5 space-y-3">
-          <div className="flex space-x-4">
+        <div className="p-5 md:space-y-3">
+          <div className="md:flex md:space-x-4 space-y-4 md:space-y-0">
             <input
               className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg w-full"
               placeholder="Pincode"
@@ -26,7 +26,7 @@ export default function orders({
               placeholder="Locality"
             ></input>
           </div>
-          <div>
+          <div className="mt-4 md:my-0">
             <textarea
               className="w-full p-1 border-2 border-slate-300 focus:outline-none focus:border-red-400 rounded-lg"
               rows="5"
@@ -34,7 +34,7 @@ export default function orders({
               placeholder="Address (Area and Street)"
             ></textarea>
           </div>
-          <div className="flex space-x-4">
+          <div className="md:flex md:space-x-4 space-y-4 md:space-y-0 mt-3 md:mt-0">
             <input
               className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg  w-full"
               placeholder="City/District/Town"
@@ -49,7 +49,7 @@ export default function orders({
               <option value="goldfish">Tamil Nadu</option>
             </select>
           </div>
-          <div className="flex space-x-4">
+          <div className="md:flex md:space-x-4 space-y-4 md:space-y-0 mt-3 md:mt-0">
             <input
               className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg w-full"
               placeholder="Landmark (Optional)"
@@ -59,7 +59,7 @@ export default function orders({
               placeholder="Alternate Phone (Optional)"
             ></input>
           </div>
-          <button className="bg-red-500 px-5 py-2 text-white text-sm rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300">
+          <button className="bg-red-500 mt-6 md:mt-0 px-5 py-2 text-white text-sm rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300">
             SAVE AND DELIVER HERE
           </button>
         </div>
@@ -75,14 +75,14 @@ export default function orders({
             return (
               <div
                 key={cart[k].desc}
-                className="w-96 flex space-x-5 justify-between"
+                className="md:w-96 flex space-x-5 justify-between"
               >
                 <p>{cart[k].desc}</p>
                 <p>₹{cart[k].price}</p>
               </div>
             );
           })}
-          <div className="w-96 flex justify-between border-y-2 border-slate-600 py-2">
+          <div className="md:w-96 flex justify-between border-y-2 border-slate-600 py-2">
             <p className="font-bold">Total</p>
             <p className="font-bold">₹{total}</p>
           </div>
@@ -97,7 +97,7 @@ export default function orders({
       {/* PAYMENT OPTION */}
       <div className=" w-full bg-slate-200 rounded-lg">
         <div className="bg-red-500 h-8 text-white flex items-center pl-2 rounded-t-lg">
-          <p>ORDER SUMMARY</p>
+          <p>PAYMENT OPTION</p>
         </div>
       </div>
     </div>

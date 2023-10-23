@@ -110,16 +110,11 @@ function myOrders() {
                             />
                           </svg>
 
-                          <h2 className="text-sm font-normal">Paid</h2>
+                          <h2 className="text-sm font-normal">Delivered</h2>
                         </div>
                       </td>
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                         <div className="flex items-center gap-x-2">
-                          <img
-                            className="object-cover w-8 h-8 rounded-full"
-                            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                            alt=""
-                          />
                           <div>
                             <h2 className="text-sm font-medium text-gray-800 ">
                               Arthur Melo
@@ -167,11 +162,6 @@ function myOrders() {
                       </td>
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                         <div className="flex items-center gap-x-2">
-                          <img
-                            className="object-cover w-8 h-8 rounded-full"
-                            src="https://images.unsplash.com/photo-1531590878845-12627191e687?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
-                            alt=""
-                          />
                           <div>
                             <h2 className="text-sm font-medium text-gray-800 ">
                               Andi Lane
@@ -214,16 +204,11 @@ function myOrders() {
                             />
                           </svg>
 
-                          <h2 className="text-sm font-normal">Paid</h2>
+                          <h2 className="text-sm font-normal">Delivered</h2>
                         </div>
                       </td>
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                         <div className="flex items-center gap-x-2">
-                          <img
-                            className="object-cover w-8 h-8 rounded-full"
-                            src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=761&q=80"
-                            alt=""
-                          />
                           <div>
                             <h2 className="text-sm font-medium text-gray-800  ">
                               Kate Morrison
@@ -265,17 +250,11 @@ function myOrders() {
                               stroke-linejoin="round"
                             />
                           </svg>
-
-                          <h2 className="text-sm font-normal">Paid</h2>
+                          <h2 className="text-sm font-normal">Delivered</h2>
                         </div>
                       </td>
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                         <div className="flex items-center gap-x-2">
-                          <img
-                            className="object-cover w-8 h-8 rounded-full"
-                            src="https://images.unsplash.com/photo-1506863530036-1efeddceb993?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1344&q=80"
-                            alt=""
-                          />
                           <div>
                             <h2 className="text-sm font-medium text-gray-800  ">
                               Candice Wu
@@ -323,11 +302,6 @@ function myOrders() {
                       </td>
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                         <div className="flex items-center gap-x-2">
-                          <img
-                            className="object-cover w-8 h-8 rounded-full"
-                            src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=644&q=80"
-                            alt=""
-                          />
                           <div>
                             <h2 className="text-sm font-medium text-gray-800  ">
                               Orlando Diggs

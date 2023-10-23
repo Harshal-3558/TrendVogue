@@ -83,8 +83,8 @@ function Login() {
           pauseOnHover={false}
           theme="colored"
         />
-        <div className="p-2 border my-16 bg-white rounded-lg shadow-lg md:w-1/2 md:p-5">
-          <div className="space-y-3">
+        <div className="m-3 p-2 py-4 border my-16 bg-white rounded-lg shadow-lg w-full md:w-1/2 md:p-5">
+          <div className="space-y-1 mb-3">
             <h1 className="text-2xl text-center font-bold md:text-3xl">
               Log In
             </h1>
@@ -112,7 +112,7 @@ function Login() {
                 name="email"
                 id="name"
                 placeholder="john@example.com"
-                className="border p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                className="border-2 p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
               />
             </div>
             <div>
@@ -126,7 +126,7 @@ function Login() {
                 name="password"
                 id="name"
                 placeholder="Password"
-                className="border p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                className="border-2 p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
               />
             </div>
             <div>

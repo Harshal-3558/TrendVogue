@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 import product from "@/models/product";
 
 function MenTshirt({ products }) {
-  // console.log(Object.keys(products));
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-14 mx-auto">

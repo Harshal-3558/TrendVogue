@@ -58,9 +58,9 @@ export default function Page({
         pauseOnHover={false}
         theme="colored"
       />
-      <div className="flex justify-center space-x-12">
+      <div className="mx-6 md:flex justify-center md:space-x-12">
         {/* Section #1 */}
-        <div className="h-[600px] w-[400px]">
+        <div className="md:h-[600px] md:w-[400px]">
           <Image
             className="rounded-xl"
             width={1200}
@@ -71,12 +71,12 @@ export default function Page({
         </div>
 
         {/* Section #2 */}
-        <div className="space-y-4">
+        <div className="mt-4 space-y-3 md:space-y-4">
           <div>
-            <p className="text-xl font-semibold text-slate-600">
-              {product.brand}
+            <p className="text-sm md:text-xl text-slate-500">{product.brand}</p>
+            <p className="text-lg md:text-lg font-extrabold text-slate-700">
+              {product.description}
             </p>
-            <p className="text-lg text-slate-500">{product.description}</p>
           </div>
           <div className="flex items-center justify-center space-x-1 border-2 w-14 bg-slate-200 rounded-lg">
             <FaStar className="text-yellow-400" />
@@ -229,7 +229,7 @@ export default function Page({
                   theme: "colored",
                 });
               }}
-              className="bg-red-500 px-5 py-2 text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300"
+              className="bg-red-500 px-9 md:px-5 py-2 text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300"
             >
               ADD TO CART
             </button>
@@ -245,7 +245,7 @@ export default function Page({
                   product.img
                 );
               }}
-              className="bg-red-500 px-5 py-2 text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300"
+              className="bg-red-500 px-8 md:px-5 py-2 text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300"
             >
               BUY NOW
             </button>
@@ -256,9 +256,9 @@ export default function Page({
               <p>CHECK FOR DELIVERY DETAILS</p>
             </div>
             <div>
-              <div className="border-2 border-slate-200 px-2 py-1 w-fit space-x-2 rounded-lg">
+              <div className="border-2 border-slate-200 px-2 py-2 md:py-1 md:w-fit space-x-2 rounded-lg">
                 <input
-                  className="focus:outline-none text-sm w-56"
+                  className="focus:outline-none md:text-sm w-64 md:w-56"
                   placeholder="Enter Pincode"
                   onChange={changePin}
                 ></input>

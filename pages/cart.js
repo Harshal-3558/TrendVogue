@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 function Cart({ user, cart, total, addCart, clearCart, removeFromCart }) {
-  // console.log(cart);
   return (
     <>
       <div className="md:flex md:m-2">
@@ -80,7 +79,7 @@ function Cart({ user, cart, total, addCart, clearCart, removeFromCart }) {
                           cart[k].price
                         );
                       }}
-                      className="relative top-2 right-1 bg-red-500 hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring focus:ring-red-300 p-2 rounded-md text-xs text-white z-0 md:text-base"
+                      className="relative top-2 right-1 bg-red-500 hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring focus:ring-red-300 p-2 rounded-md text-sm text-white z-0 md:text-base"
                     >
                       Remove
                     </button>
@@ -92,7 +91,9 @@ function Cart({ user, cart, total, addCart, clearCart, removeFromCart }) {
         </div>
         <div className="m-2 bg-gray-200 rounded-md p-2 space-y-6 md:w-[350px] md:h-[150px]">
           <div>
-            <p className="font-extrabold text-lg">Subtotal ₹ {total}</p>
+            <p className="font-extrabold text-xl md:text-lg">
+              Subtotal ₹ {total}
+            </p>
             <span className="text-green-600 flex items-center space-x-2">
               <FaCircleCheck />
               <p>Your order is eligible for free Delivery</p>
@@ -101,7 +102,7 @@ function Cart({ user, cart, total, addCart, clearCart, removeFromCart }) {
           <div>
             <Link href="/orders">
               <button className="bg-red-500 hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring focus:ring-red-300 p-2 rounded-md text-base text-white z-0 w-full md:text-lg">
-                Proceed to Buy (2 items)
+                Proceed to Buy
               </button>
             </Link>
           </div>

@@ -59,8 +59,8 @@ function SignUp() {
           pauseOnHover={false}
           theme="colored"
         />
-        <div className="p-2 border my-16 bg-white rounded-lg shadow-lg md:w-1/2 md:p-5">
-          <div className="space-y-3">
+        <div className="m-3 p-2 py-3 border my-16 bg-white rounded-lg shadow-lg w-full md:w-1/2 md:p-5">
+          <div className="space-y-1 mb-3 md:space-y-3">
             <h1 className="text-2xl text-center font-bold md:text-3xl">
               Sign Up
             </h1>
@@ -74,7 +74,7 @@ function SignUp() {
           <form
             onSubmit={handleSubmit}
             method="POST"
-            className="px-2 space-y-5 text-base md:text-lg"
+            className="px-2 space-y-3 md:space-y-5 text-base md:text-lg"
           >
             <div>
               <label className="block" for="name">
@@ -87,7 +87,7 @@ function SignUp() {
                 name="email"
                 id="email"
                 placeholder="john@example.com"
-                className="border p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                className="border-2 p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
               />
             </div>
             <div>
@@ -101,7 +101,7 @@ function SignUp() {
                 name="name"
                 id="name"
                 placeholder="Enter name"
-                className="border p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                className="border-2 p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
               />
             </div>
             <div>
@@ -115,7 +115,7 @@ function SignUp() {
                 name="password"
                 id="password"
                 placeholder="Password"
-                className="border p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                className="border-2 p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
               />
             </div>
             <div className="flex space-x-2 items-center">
