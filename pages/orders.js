@@ -1,4 +1,6 @@
 import React from "react";
+import Head from "next/head";
+import Script from "next/script";
 
 export default function orders({
   user,
@@ -8,8 +10,63 @@ export default function orders({
   clearCart,
   removeFromCart,
 }) {
+  const initiatePayment = async() => {
+    // Get a transaction token
+    const data = {cart,total}
+   
+  const response = await fetch(`${NEXT_PUBLIC_HOST}/api/preTransaction`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data), 
+  });
+  let a = await response.json();
+  console.log(a)
+
+    let amount;
+    var config = {
+      root: "",
+      flow: "DEFAULT",
+      data: {
+        orderId: Math.random() /* update order id */,
+        token: "" /* update token value */,
+        tokenType: txnToken,
+        amount: amount /* update amount */,
+      },
+      handler: {
+        notifyMerchant: function (eventName, data) {
+          console.log("notifyMerchant handler function called");
+          console.log("eventName => ", eventName);
+          console.log("data => ", data);
+        },
+      },
+    };
+
+    // initialze configuration using init method
+    window.Paytm.CheckoutJS.init(config)
+      .then(function onSuccess() {
+        // after successfully updating configuration, invoke JS Checkout
+        window.Paytm.CheckoutJS.invoke();
+      })
+      .catch(function onError(error) {
+        console.log("error => ", error);
+      });
+  };
   return (
     <div className="p-4 space-y-4">
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0"
+        />
+      </Head>
+      <Script
+        type="application/javascript"
+        src={`${process.env.PAYTM_HOST}/merchantpgpui/checkoutjs/merchants/${process.env.PAYTM_MID}.js`}
+        onload="onScriptLoad();"
+        crossorigin="anonymous"
+      />
       {/* DELIVERY ADDRESS */}
       <div className="h-90 w-full bg-slate-200 rounded-lg">
         <div className="bg-red-500 h-8 text-white flex items-center pl-2 rounded-t-lg">
@@ -87,7 +144,10 @@ export default function orders({
             <p className="font-bold">₹{total}</p>
           </div>
           <div className="pt-5">
-            <button className="bg-red-500 px-5 py-2 text-white text-sm rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300">
+            <button
+              onClick={initiatePayment}
+              className="bg-red-500 px-5 py-2 text-white text-sm rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300"
+            >
               PAYMENT TRANSACTION
             </button>
           </div>
@@ -95,11 +155,11 @@ export default function orders({
       </div>
 
       {/* PAYMENT OPTION */}
-      <div className=" w-full bg-slate-200 rounded-lg">
+      {/* <div className=" w-full bg-slate-200 rounded-lg">
         <div className="bg-red-500 h-8 text-white flex items-center pl-2 rounded-t-lg">
           <p>PAYMENT OPTION</p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

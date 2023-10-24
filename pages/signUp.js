@@ -19,7 +19,7 @@ function SignUp() {
   async function handleSubmit(e) {
     e.preventDefault();
     const data = { email, name, password };
-    const response = await fetch("http://localhost:3000/api/signUp", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/signUp`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

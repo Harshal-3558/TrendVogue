@@ -2,23 +2,23 @@ import React from "react";
 
 function contact() {
   return (
-    <section class="min-h-screen bg-gradient-to-r from-red-600 via-red-800 to-red-900  ">
-      <div class="container flex flex-col min-h-screen px-6 py-12 mx-auto">
-        <div class="flex-1 lg:flex lg:items-center lg:-mx-6">
-          <div class="text-white lg:w-1/2 lg:mx-6">
-            <h1 class="text-2xl font-semibold capitalize lg:text-3xl">
+    <section className="min-h-screen bg-gradient-to-r from-red-600 via-red-800 to-red-900  ">
+      <div className="container flex flex-col min-h-screen px-6 py-12 mx-auto">
+        <div className="flex-1 lg:flex lg:items-center lg:-mx-6">
+          <div className="text-white lg:w-1/2 lg:mx-6">
+            <h1 className="text-2xl font-semibold capitalize lg:text-3xl">
               Get a quote
             </h1>
 
-            <p class="max-w-xl mt-6">
+            <p className="max-w-xl mt-6">
               Ask us everything and we would love to hear from you
             </p>
 
-            <div class="mt-6 space-y-8 md:mt-8">
-              <p class="flex items-start -mx-2">
+            <div className="mt-6 space-y-8 md:mt-8">
+              <p className="flex items-start -mx-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="w-6 h-6 mx-2 text-white"
+                  className="w-6 h-6 mx-2 text-white"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -36,15 +36,15 @@ function contact() {
                   />
                 </svg>
 
-                <span class="mx-2 text-white truncate w-72">
+                <span className="mx-2 text-white truncate w-72">
                   Cecilia Chapman 711-2880 Nulla St. Mankato Mississippi 96522
                 </span>
               </p>
 
-              <p class="flex items-start -mx-2">
+              <p className="flex items-start -mx-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="w-6 h-6 mx-2 text-white"
+                  className="w-6 h-6 mx-2 text-white"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -57,15 +57,15 @@ function contact() {
                   />
                 </svg>
 
-                <span class="mx-2 text-white truncate w-72">
+                <span className="mx-2 text-white truncate w-72">
                   (257) 563-7401
                 </span>
               </p>
 
-              <p class="flex items-start -mx-2">
+              <p className="flex items-start -mx-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="w-6 h-6 mx-2 text-white"
+                  className="w-6 h-6 mx-2 text-white"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -78,22 +78,22 @@ function contact() {
                   />
                 </svg>
 
-                <span class="mx-2 text-white truncate w-72">
+                <span className="mx-2 text-white truncate w-72">
                   acb@example.com
                 </span>
               </p>
             </div>
 
-            <div class="mt-6 md:mt-8">
-              <h3 class="text-gray-300 ">Follow us</h3>
+            <div className="mt-6 md:mt-8">
+              <h3 className="text-gray-300 ">Follow us</h3>
 
-              <div class="flex mt-4 -mx-1.5 ">
+              <div className="flex mt-4 -mx-1.5 ">
                 <a
-                  class="mx-1.5 text-white transition-colors duration-300 transform hover:text-red-500"
+                  className="mx-1.5 text-white transition-colors duration-300 transform hover:text-red-500"
                   href="#"
                 >
                   <svg
-                    class="w-10 h-10 fill-current"
+                    className="w-10 h-10 fill-current"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -103,11 +103,11 @@ function contact() {
                 </a>
 
                 <a
-                  class="mx-1.5 text-white transition-colors duration-300 transform hover:text-red-500"
+                  className="mx-1.5 text-white transition-colors duration-300 transform hover:text-red-500"
                   href="#"
                 >
                   <svg
-                    class="w-8 h-8"
+                    className="w-8 h-8"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -128,11 +128,11 @@ function contact() {
                 </a>
 
                 <a
-                  class="mx-1.5 text-white transition-colors duration-300 transform hover:text-red-500"
+                  className="mx-1.5 text-white transition-colors duration-300 transform hover:text-red-500"
                   href="#"
                 >
                   <svg
-                    class="w-8 h-8"
+                    className="w-8 h-8"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -145,11 +145,11 @@ function contact() {
                 </a>
 
                 <a
-                  class="mx-1.5 text-white transition-colors duration-300 transform hover:text-red-500"
+                  className="mx-1.5 text-white transition-colors duration-300 transform hover:text-red-500"
                   href="#"
                 >
                   <svg
-                    class="w-8 h-8"
+                    className="w-8 h-8"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -164,44 +164,44 @@ function contact() {
             </div>
           </div>
 
-          <div class="mt-8 lg:w-1/2 lg:mx-6">
-            <div class="w-full px-8 py-10 mx-auto overflow-hidden bg-white shadow-2xl rounded-xl  lg:max-w-xl">
-              <h1 class="text-xl font-medium text-gray-700 ">Contact form</h1>
+          <div className="mt-8 lg:w-1/2 lg:mx-6">
+            <div className="w-full px-8 py-10 mx-auto overflow-hidden bg-white shadow-2xl rounded-xl  lg:max-w-xl">
+              <h1 className="text-xl font-medium text-gray-700 ">Contact form</h1>
 
-              <form class="mt-4">
-                <div class="flex-1">
-                  <label class="block mb-2 text-sm text-gray-600 ">
+              <form className="mt-4">
+                <div className="flex-1">
+                  <label className="block mb-2 text-sm text-gray-600 ">
                     Full Name
                   </label>
                   <input
                     type="text"
                     placeholder="John Doe"
-                    class="block w-full px-5 py-3 mt-2 text-gray-700 bg-white border-2 border-gray-200 rounded-lg  focus:border-red-400 focus:ring-red-300 focus:ring-opacity-40  focus:outline-none focus:ring"
+                    className="block w-full px-5 py-3 mt-2 text-gray-700 bg-white border-2 border-gray-200 rounded-lg  focus:border-red-400 focus:ring-red-300 focus:ring-opacity-40  focus:outline-none focus:ring"
                   />
                 </div>
 
-                <div class="flex-1 mt-6">
-                  <label class="block mb-2 text-sm text-gray-600 ">
+                <div className="flex-1 mt-6">
+                  <label className="block mb-2 text-sm text-gray-600 ">
                     Email address
                   </label>
                   <input
                     type="email"
                     placeholder="johndoe@example.com"
-                    class="block w-full px-5 py-3 mt-2 text-gray-700 bg-white border-2 border-gray-200 rounded-lg  focus:border-red-400 focus:ring-red-300 focus:ring-opacity-40  focus:outline-none focus:ring"
+                    className="block w-full px-5 py-3 mt-2 text-gray-700 bg-white border-2 border-gray-200 rounded-lg  focus:border-red-400 focus:ring-red-300 focus:ring-opacity-40  focus:outline-none focus:ring"
                   />
                 </div>
 
-                <div class="w-full mt-6">
-                  <label class="block mb-2 text-sm text-gray-600 ">
+                <div className="w-full mt-6">
+                  <label className="block mb-2 text-sm text-gray-600 ">
                     Message
                   </label>
                   <textarea
-                    class="block w-full h-32 px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border-2 border-gray-200 rounded-lg md:h-48  focus:border-red-400 focus:ring-red-300 focus:ring-opacity-40  focus:outline-none focus:ring"
+                    className="block w-full h-32 px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border-2 border-gray-200 rounded-lg md:h-48  focus:border-red-400 focus:ring-red-300 focus:ring-opacity-40  focus:outline-none focus:ring"
                     placeholder="Message"
                   ></textarea>
                 </div>
 
-                <button class="w-full px-6 py-3 mt-6 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-red-600 rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-400 focus:ring-opacity-50">
+                <button className="w-full px-6 py-3 mt-6 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-red-600 rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-400 focus:ring-opacity-50">
                   get in touch
                 </button>
               </form>

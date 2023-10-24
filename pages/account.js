@@ -14,7 +14,7 @@ function account() {
             <p className="font-bold w-36">Profile Photo</p>
             <div className="flex items-center space-x-4">
               <Image
-                class="object-cover w-20 h-20 rounded-full"
+                className="object-cover w-20 h-20 rounded-full"
                 width={1200}
                 height={500}
                 src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&h=764&q=100"
@@ -22,7 +22,7 @@ function account() {
               />
               <input
                 type="file"
-                class=" h-12  px-3 py-2 mt-2 text-sm text-gray-600 bg-white border-2 border-slate-300 rounded-lg file:bg-gray-200 file:text-gray-700 file:text-sm file:px-4 file:py-1 file:border-none file:rounded-full  placeholder-gray-400/70  focus:border-red-400 focus:outline-none focus:ring focus:ring-red-300 focus:ring-opacity-40"
+                className=" h-12  px-3 py-2 mt-2 text-sm text-gray-600 bg-white border-2 border-slate-300 rounded-lg file:bg-gray-200 file:text-gray-700 file:text-sm file:px-4 file:py-1 file:border-none file:rounded-full  placeholder-gray-400/70  focus:border-red-400 focus:outline-none focus:ring focus:ring-red-300 focus:ring-opacity-40"
               />
             </div>
           </div>

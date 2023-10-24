@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { React, useContext, useState } from "react";
+import { React, useState } from "react";
 import { FaStar, FaLocationDot } from "react-icons/fa6";
 const mongoose = require("mongoose");
 import product from "@/models/product";
@@ -25,7 +25,7 @@ export default function Page({
   const [color, setColor] = useState(product.color);
   const [size, setSize] = useState(product.size);
   const handleService = async () => {
-    let pins = await fetch("http://localhost:3000/api/pincode");
+    let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
     let pinJSON = await pins.json();
     if (pinJSON.includes(parseInt(pin))) {
       setService(true);
@@ -38,11 +38,11 @@ export default function Page({
   };
   const refreshVariant = (newColor, newSize) => {
     router.push(
-      `http://localhost:3000/product/${variant[newColor][newSize]["slug"]}`
+      `${process.env.NEXT_PUBLIC_HOST}/product/${variant[newColor][newSize]["slug"]}`
     );
     setColor(newColor);
     setSize(newSize);
-    // router.reload()
+    //  router.reload()
   };
   return (
     <div className="py-12">

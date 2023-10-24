@@ -1,105 +1,59 @@
 import Image from "next/image";
 import logo from "../public/logo1.png";
-import {
-  FaInstagram,
-  FaTwitter,
-  FaFacebook,
-  FaPinterest,
-  FaYoutube,
-} from "react-icons/fa6";
 import Link from "next/link";
 
 export default function Footer() {
   return (
     <>
-      {/* <div class="text-center text-5xl space-y-6">
-        <button>
-          <i class="fa-solid fa-circle-up text-red-400 animate-bounce"></i>
-        </button>
-      </div>
-      <footer class="border border-t-4">
-        <div class="flex bg-gray-100 space-x-4 px-5 py-4">
-          <ul class="space-y-2 w-full">
-            <li class="hover:text-red-600">Your TrendVogue.com</li>
-            <li class="hover:text-red-600">Wish List</li>
-            <li class="hover:text-red-600">Your Account</li>
-            <li class="hover:text-red-600">Returns</li>
-            <li class="hover:text-red-600">Customer Service</li>
-          </ul>
-          <ul class="space-y-2 w-full">
-            <li class="hover:text-red-600">Your Orders</li>
-            <li class="hover:text-red-600">About Us</li>
-            <li class="hover:text-red-600">Blog</li>
-            <li class="hover:text-red-600">Contact Us</li>
-          </ul>
-        </div>
-        <div>
-          <div class="bg-red-500 text-white text-center py-2 space-y-4">
-            <p>Connect With Us</p>
-            <div class="flex justify-center space-x-8 text-3xl">
-              <FaInstagram />
-              <FaTwitter />
-              <FaFacebook />
-              <FaPinterest />
-              <FaYoutube />
-            </div>
-            <div class="flex space-x-3 items-center justify-center">
-              <i class="fa-regular fa-copyright"></i>
-              <p>www.TrendVogue.com</p>
-            </div>
-          </div>
-        </div>
-      </footer> */}
-
-      <footer class="bg-white pt-4 sm:pt-6 lg:pt-8">
-        <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
-          <div class="flex flex-col items-center justify-between gap-2 border-b border-t py-6 md:flex-row">
-            <div class="mb-3 text-center md:mb-0 md:text-left">
-              <span class="font-bold uppercase tracking-widest text-gray-800">
+      <footer className="bg-white pt-4 sm:pt-6 lg:pt-8">
+        <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
+          <div className="flex flex-col items-center justify-between gap-2 border-b border-t py-6 md:flex-row">
+            <div className="mb-3 text-center md:mb-0 md:text-left">
+              <span className="font-bold uppercase tracking-widest text-gray-800">
                 Newsletter
               </span>
-              <p class="text-gray-500">Subscribe to our newsletter</p>
+              <p className="text-gray-500">Subscribe to our newsletter</p>
             </div>
 
-            <form class="flex w-full gap-2 md:max-w-md">
+            <form className="flex w-full gap-2 md:max-w-md">
               <input
                 placeholder="Email"
-                class="w-full flex-1 rounded-lg border-2 bg-gray-50 px-3 py-2 text-gray-800 placeholder-gray-500 outline-none ring-red-300 transition duration-100 focus:ring"
+                className="w-full flex-1 rounded-lg border-2 bg-gray-50 px-3 py-2 text-gray-800 placeholder-gray-500 outline-none ring-red-300 transition duration-100 focus:ring"
               />
 
-              <button class="inline-block rounded-lg bg-red-500 px-8 py-2 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 md:text-base">
+              <button className="inline-block rounded-lg bg-red-500 px-8 py-2 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 md:text-base">
                 Send
               </button>
             </form>
           </div>
         </div>
 
-        <div class="pt-12">
-          <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
-            <div class="mb-16 grid grid-cols-2 gap-12 md:grid-cols-4 lg:grid-cols-6 lg:gap-8">
-              <div class="col-span-full lg:col-span-2">
-                <div class="mb-4 lg:-mt-2">
+        <div className="pt-12">
+          <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
+            <div className="mb-16 grid grid-cols-2 gap-12 md:grid-cols-4 lg:grid-cols-6 lg:gap-8">
+              <div className="col-span-full lg:col-span-2">
+                <div className="mb-4 lg:-mt-2">
                   <Link
                     href="/"
-                    class="inline-flex items-center gap-2 text-xl font-bold text-black md:text-2xl"
+                    className="inline-flex items-center gap-2 text-xl font-bold text-black md:text-2xl"
                     aria-label="logo"
                   >
                     <Image className="h-8 w-full" src={logo} alt="logo" />
                   </Link>
                 </div>
 
-                <p class="mb-6 text-gray-500 sm:pr-8">
+                <p className="mb-6 text-gray-500 sm:pr-8">
                 Fashionable Products for Men and Women
                 </p>
 
-                <div class="flex gap-4">
+                <div className="flex gap-4">
                   <a
                     href="#"
                     target="_blank"
-                    class="text-gray-400 transition duration-100 hover:text-red-500 active:text-red-600"
+                    className="text-gray-400 transition duration-100 hover:text-red-500 active:text-red-600"
                   >
                     <svg
-                      class="h-5 w-5"
+                      className="h-5 w-5"
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
@@ -113,10 +67,10 @@ export default function Footer() {
                   <a
                     href="#"
                     target="_blank"
-                    class="text-gray-400 transition duration-100 hover:text-red-500 active:text-red-600"
+                    className="text-gray-400 transition duration-100 hover:text-red-500 active:text-red-600"
                   >
                     <svg
-                      class="h-5 w-5"
+                      className="h-5 w-5"
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
@@ -130,10 +84,10 @@ export default function Footer() {
                   <a
                     href="#"
                     target="_blank"
-                    class="text-gray-400 transition duration-100 hover:text-red-500 active:text-red-600"
+                    className="text-gray-400 transition duration-100 hover:text-red-500 active:text-red-600"
                   >
                     <svg
-                      class="h-5 w-5"
+                      className="h-5 w-5"
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
@@ -147,10 +101,10 @@ export default function Footer() {
                   <a
                     href="#"
                     target="_blank"
-                    class="text-gray-400 transition duration-100 hover:text-red-500 active:text-red-600"
+                    className="text-gray-400 transition duration-100 hover:text-red-500 active:text-red-600"
                   >
                     <svg
-                      class="h-5 w-5"
+                      className="h-5 w-5"
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
@@ -164,15 +118,15 @@ export default function Footer() {
               </div>
 
               <div>
-                <div class="mb-4 font-bold uppercase tracking-widest text-gray-800">
+                <div className="mb-4 font-bold uppercase tracking-widest text-gray-800">
                   Products
                 </div>
 
-                <nav class="flex flex-col gap-4">
+                <nav className="flex flex-col gap-4">
                   <div>
                     <a
                       href="#"
-                      class="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
+                      className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
                     >
                       Overview
                     </a>
@@ -181,7 +135,7 @@ export default function Footer() {
                   <div>
                     <a
                       href="#"
-                      class="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
+                      className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
                     >
                       Solutions
                     </a>
@@ -190,7 +144,7 @@ export default function Footer() {
                   <div>
                     <a
                       href="#"
-                      class="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
+                      className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
                     >
                       Pricing
                     </a>
@@ -199,7 +153,7 @@ export default function Footer() {
                   <div>
                     <a
                       href="#"
-                      class="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
+                      className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
                     >
                       Customers
                     </a>
@@ -208,15 +162,15 @@ export default function Footer() {
               </div>
 
               <div>
-                <div class="mb-4 font-bold uppercase tracking-widest text-gray-800">
+                <div className="mb-4 font-bold uppercase tracking-widest text-gray-800">
                   Company
                 </div>
 
-                <nav class="flex flex-col gap-4">
+                <nav className="flex flex-col gap-4">
                   <div>
                     <a
                       href="#"
-                      class="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
+                      className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
                     >
                       About
                     </a>
@@ -225,7 +179,7 @@ export default function Footer() {
                   <div>
                     <a
                       href="#"
-                      class="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
+                      className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
                     >
                       Investor Relations
                     </a>
@@ -234,7 +188,7 @@ export default function Footer() {
                   <div>
                     <a
                       href="#"
-                      class="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
+                      className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
                     >
                       Jobs
                     </a>
@@ -243,7 +197,7 @@ export default function Footer() {
                   <div>
                     <a
                       href="#"
-                      class="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
+                      className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
                     >
                       Blog
                     </a>
@@ -252,15 +206,15 @@ export default function Footer() {
               </div>
 
               <div>
-                <div class="mb-4 font-bold uppercase tracking-widest text-gray-800">
+                <div className="mb-4 font-bold uppercase tracking-widest text-gray-800">
                   Support
                 </div>
 
-                <nav class="flex flex-col gap-4">
+                <nav className="flex flex-col gap-4">
                   <div>
                     <a
                       href="#"
-                      class="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
+                      className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
                     >
                       Contact
                     </a>
@@ -269,7 +223,7 @@ export default function Footer() {
                   <div>
                     <a
                       href="#"
-                      class="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
+                      className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
                     >
                       Documentation
                     </a>
@@ -278,7 +232,7 @@ export default function Footer() {
                   <div>
                     <a
                       href="#"
-                      class="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
+                      className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
                     >
                       Chat
                     </a>
@@ -287,7 +241,7 @@ export default function Footer() {
                   <div>
                     <a
                       href="#"
-                      class="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
+                      className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
                     >
                       FAQ
                     </a>
@@ -296,15 +250,15 @@ export default function Footer() {
               </div>
 
               <div>
-                <div class="mb-4 font-bold uppercase tracking-widest text-gray-800">
+                <div className="mb-4 font-bold uppercase tracking-widest text-gray-800">
                   Legal
                 </div>
 
-                <nav class="flex flex-col gap-4">
+                <nav className="flex flex-col gap-4">
                   <div>
                     <a
                       href="#"
-                      class="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
+                      className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
                     >
                       Terms of Service
                     </a>
@@ -313,7 +267,7 @@ export default function Footer() {
                   <div>
                     <a
                       href="#"
-                      class="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
+                      className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
                     >
                       Privacy Policy
                     </a>
@@ -322,7 +276,7 @@ export default function Footer() {
                   <div>
                     <a
                       href="#"
-                      class="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
+                      className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
                     >
                       Cookie settings
                     </a>
@@ -331,7 +285,7 @@ export default function Footer() {
               </div>
             </div>
 
-            <div class="border-t py-8 text-center text-sm text-gray-400">
+            <div className="border-t py-8 text-center text-sm text-gray-400">
               © 2023 - TrendVogue. All rights reserved.
             </div>
           </div>
