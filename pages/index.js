@@ -56,54 +56,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Boxes */}
-        {/* <div className="p-2 flex flex-wrap justify-center">
-          <div className="w-40 md:w-72 mx-2 text-center">
-            <Image
-              src="https://images.bewakoof.com/uploads/grid/app/revamp-thumbnails-new-arrivals-1687584021.jpg"
-              layout="responsive"
-              width={1200}
-              height={500}
-              className="rounded-md"
-              alt="Box 1"
-            />
-            <p>New Arrivals</p>
-          </div>
-          <div className="w-40 md:w-72 mx-2 text-center">
-            <Image
-              src="https://images.bewakoof.com/uploads/grid/app/revamp-thumbnails-bestsellers-1687584022.jpg"
-              layout="responsive"
-              width={1200}
-              height={500}
-              className="rounded-md"
-              alt="Box 2"
-            />
-            <p>Best Sellers</p>
-          </div>
-          <div className="w-40 md:w-72 mx-2 text-center">
-            <Image
-              src="https://images.bewakoof.com/uploads/grid/app/revamp-thumbnails-collab-1687584023.jpg"
-              layout="responsive"
-              width={1200}
-              height={500}
-              className="rounded-md"
-              alt="Box 3"
-            />
-            <p>Official Merch</p>
-          </div>
-          <div className="w-40 md:w-72 mx-2 text-center">
-            <Image
-              src="https://images.bewakoof.com/uploads/grid/app/revamp-thumbnails-last-sizes-left-1687584024.jpg"
-              layout="responsive"
-              width={1200}
-              height={500}
-              className="rounded-md"
-              alt="Box 4"
-            />
-            <p>Coupon Offers</p>
-          </div>
-        </div> */}
-
         {/* Categories */}
         <div className="bg-white py-6 sm:py-8 lg:py-12">
           <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
@@ -115,7 +67,7 @@ export default function Home() {
               <div>
                 <Link
                   href="/MenTshirt"
-                  className="group relative flex h-52 md:h-96 items-end overflow-hidden rounded-lg bg-gray-100 p-4 shadow-lg"
+                  className="group relative flex h-52 md:h-96 items-end overflow-hidden rounded-xl bg-gray-100 p-4 shadow-lg"
                 >
                   <Image
                     src="https://images.bewakoof.com/t1080/men-s-brown-blue-tie-dye-shirt-624430-1695906066-1.jpg"
@@ -123,7 +75,7 @@ export default function Home() {
                     height={500}
                     loading="lazy"
                     alt="Photo by engin akyurt"
-                    className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+                    className="absolute inset-0 h-full w-full object-cover object-center transition duration-300 group-hover:scale-110"
                   />
 
                   <div className="relative flex w-full flex-col rounded-lg bg-red-500 p-2 md:p-4 text-center">
@@ -137,7 +89,7 @@ export default function Home() {
               <div>
                 <Link
                   href="/WomenTshirt"
-                  className="group relative flex h-52 md:h-96 items-end overflow-hidden rounded-lg bg-gray-100 p-4 shadow-lg"
+                  className="group relative flex h-52 md:h-96 items-end overflow-hidden rounded-xl bg-gray-100 p-4 shadow-lg"
                 >
                   <Image
                     src="https://images.bewakoof.com/t1080/women-s-white-all-over-leaf-printed-dress-ssumr23cswssdr259-604116-1689843500-1.jpg"
@@ -145,7 +97,7 @@ export default function Home() {
                     height={500}
                     loading="lazy"
                     alt="Photo by engin akyurt"
-                    className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+                    className="absolute inset-0 h-full w-full object-cover object-center transition duration-300 group-hover:scale-110"
                   />
 
                   <div className="relative flex w-full flex-col rounded-lg bg-red-500 p-2 md:p-4 text-center">
@@ -159,7 +111,7 @@ export default function Home() {
               <div>
                 <Link
                   href="/"
-                  className="group relative flex h-52 md:h-96 items-end overflow-hidden rounded-lg bg-gray-100 p-4 shadow-lg"
+                  className="group relative flex h-52 md:h-96 items-end overflow-hidden rounded-xl bg-gray-100 p-4 shadow-lg"
                 >
                   <Image
                     src="https://images.bewakoof.com/t1080/men-s-brown-blue-tie-dye-shirt-624430-1695906066-1.jpg"
@@ -167,7 +119,7 @@ export default function Home() {
                     height={500}
                     loading="lazy"
                     alt="Photo by engin akyurt"
-                    className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+                    className="absolute inset-0 h-full w-full object-cover object-center transition duration-300 group-hover:scale-110"
                   />
 
                   <div className="relative flex w-full flex-col rounded-lg bg-red-500 p-2 md:p-4 text-center">
@@ -180,7 +132,7 @@ export default function Home() {
               <div>
                 <Link
                   href="/"
-                  className="group relative flex h-52 md:h-96 items-end overflow-hidden rounded-lg bg-gray-100 p-4 shadow-lg"
+                  className="group relative flex h-52 md:h-96 items-end overflow-hidden rounded-xl bg-gray-100 p-4 shadow-lg"
                 >
                   <Image
                     src="https://images.bewakoof.com/t1080/men-s-brown-blue-tie-dye-shirt-624430-1695906066-1.jpg"
@@ -188,7 +140,7 @@ export default function Home() {
                     height={500}
                     loading="lazy"
                     alt="Photo by engin akyurt"
-                    className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+                    className="absolute inset-0 h-full w-full object-cover object-center transition duration-300 group-hover:scale-110"
                   />
 
                   <div className="relative flex w-full flex-col rounded-lg bg-red-500 p-2 md:p-4 text-center">
@@ -202,12 +154,12 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Gallery */}
+        {/* Boxes */}
         <div class="bg-white py-6 sm:py-8 lg:py-12">
           <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
             <div class="mb-4 flex items-center justify-between gap-8 sm:mb-8 md:mb-12">
               <div class="flex items-center gap-12">
-                <h2 class="text-2xl font-bold text-gray-800 lg:text-3xl">
+                <h2 class="text-xl font-bold text-red-600 lg:text-3xl">
                   OUR BEST PICKS
                 </h2>
 
@@ -225,79 +177,47 @@ export default function Home() {
                 More
               </a>
             </div>
-
-            <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 xl:gap-8">
-              <a
-                href="#"
-                class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80"
-              >
-                <img
-                  src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&q=75&fit=crop&w=600"
+            <div className="grid grid-rows-4 md:grid-rows-2 md:grid-cols-2 gap-4">
+              <div className="rounded-2xl overflow-hidden">
+                <Image
+                  src="https://images.bewakoof.com/uploads/grid/app/Festive-Sale-Midsize-Banners-7-1697730581.jpg"
+                  width={1200}
+                  height={500}
                   loading="lazy"
-                  alt="Photo by Minh Pham"
-                  class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
-                />
-
-                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"></div>
-
-                <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">
-                  VR
-                </span>
-              </a>
-
-              <a
-                href="#"
-                class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80"
-              >
-                <img
+                  alt="Photo by engin akyurt"
+                  className="object-cover object-center transition duration-300 hover:scale-110"
+                ></Image>
+              </div>
+              <div className="rounded-2xl overflow-hidden">
+                <Image
                   src="https://images.bewakoof.com/uploads/grid/app/Festive-Sale-Midsize-Banners-5--1--1697731227.jpg"
+                  width={1200}
+                  height={500}
                   loading="lazy"
-                  alt="Photo by Magicle"
-                  class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
-                />
-
-                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"></div>
-
-                <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">
-                  Tech
-                </span>
-              </a>
-
-              <a
-                href="#"
-                class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80"
-              >
-                <img
-                  src="https://images.unsplash.com/photo-1610465299996-30f240ac2b1c?auto=format&q=75&fit=crop&w=1000"
+                  alt="Photo by engin akyurt"
+                  className="object-cover object-center transition duration-300 hover:scale-110"
+                ></Image>
+              </div>
+              <div className="rounded-2xl overflow-hidden">
+                <Image
+                  src="https://images.bewakoof.com/uploads/grid/app/desktop-mid-size-hygiene-JOG-women-callout-1697435900-1697732382.jpg"
+                  width={1200}
+                  height={500}
                   loading="lazy"
-                  alt="Photo by Martin Sanchez"
-                  class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
-                />
-
-                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"></div>
-
-                <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">
-                  Dev
-                </span>
-              </a>
-
-              <a
-                href="#"
-                class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80"
-              >
-                <img
-                  src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&q=75&fit=crop&w=600"
+                  alt="Photo by engin akyurt"
+                  className="object-cover object-center transition duration-300 hover:scale-110"
+                ></Image>
+              </div>
+              <div className="rounded-2xl overflow-hidden">
+                <Image
+                  src="https://images.bewakoof.com/uploads/grid/app/unnamed-1697731530.jpg"
+                  width={1200}
+                  height={500}
                   loading="lazy"
-                  alt="Photo by Lorenzo Herrera"
-                  class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
-                />
-
-                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"></div>
-
-                <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">
-                  Retro
-                </span>
-              </a>
+                  alt="Photo by engin akyurt"
+                  className="object-cover object-center transition duration-300 hover:scale-110"
+                ></Image>
+              </div>
             </div>
           </div>
         </div>

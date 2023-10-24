@@ -63,25 +63,19 @@ export default function Navbar({ user, logout }) {
                 className="hover:text-red-600 hover:underline underline-offset-8 decoration-2"
                 href="/MenTshirt"
               >
-                Men
+                About Us
               </Link>
               <Link
                 className="hover:text-red-600 hover:underline underline-offset-8 decoration-2"
                 href="/WomenTshirt"
               >
-                Women
+                Customer Service
               </Link>
               <Link
                 className="hover:text-red-600 hover:underline underline-offset-8 decoration-2"
-                href="/"
+                href="/contact"
               >
-                Kids
-              </Link>
-              <Link
-                className="hover:text-red-600 hover:underline underline-offset-8 decoration-2"
-                href="/"
-              >
-                Home & Living
+                Contact Us
               </Link>
             </div>
           </div>
@@ -196,16 +190,8 @@ export default function Navbar({ user, logout }) {
             <span>My Account</span>
           </div>
           <div className="flex space-x-3 items-center p-3 hover:bg-gray-200 rounded-lg">
-            <FaHeart />
-            <span>My Wishlist</span>
-          </div>
-          <div className="flex space-x-3 items-center p-3 hover:bg-gray-200 rounded-lg">
             <FaBoxOpen />
             <span>My Orders</span>
-          </div>
-          <div className="flex space-x-3 items-center p-3 hover:bg-gray-200 rounded-lg">
-            <FaTicket />
-            <span>Coupons</span>
           </div>
           <div className="flex space-x-3 items-center p-3 hover:bg-gray-200 rounded-lg">
             <FaGear />
