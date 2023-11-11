@@ -1,9 +1,36 @@
 import React from "react";
+import { jwtDecode } from "jwt-decode";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { FaCheck, FaXmark } from "react-icons/fa6";
 
-function myOrders() {
+function MyOrders({}) {
+  const [products, setProducts] = useState("");
+  useEffect(() => {
+    const getOrder = async () => {
+      const item = localStorage.getItem("token");
+      const decoded = await jwtDecode(item);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_HOST}/api/getOrders`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(decoded),
+        }
+      );
+      const res = await response.json();
+
+      setProducts(res.order);
+    };
+
+    getOrder();
+  }, []);
+
   return (
     <div className="my-8">
-      <div className="ml-20 text-3xl font-bold">Your Orders</div>
+      <div className="ml-20 text-3xl font-bold text-red-500">Your Orders</div>
       <section className="container px-4 mx-auto">
         <div className="flex flex-col">
           <div className="mx-4 my-2 sm:mx-6 lg:mx-8">
@@ -14,67 +41,39 @@ function myOrders() {
                     <tr>
                       <th
                         scope="col"
-                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 "
+                        className="py-3.5 px-4 text-sm font-bold text-left rtl:text-right"
                       >
                         <div className="flex items-center gap-x-3">
-                          <button className="flex items-center gap-x-2">
-                            <span>Invoice</span>
-
-                            <svg
-                              className="h-3"
-                              viewBox="0 0 10 11"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M2.13347 0.0999756H2.98516L5.01902 4.79058H3.86226L3.45549 3.79907H1.63772L1.24366 4.79058H0.0996094L2.13347 0.0999756ZM2.54025 1.46012L1.96822 2.92196H3.11227L2.54025 1.46012Z"
-                                fill="currentColor"
-                                stroke="currentColor"
-                                stroke-width="0.1"
-                              />
-                              <path
-                                d="M0.722656 9.60832L3.09974 6.78633H0.811638V5.87109H4.35819V6.78633L2.01925 9.60832H4.43446V10.5617H0.722656V9.60832Z"
-                                fill="currentColor"
-                                stroke="currentColor"
-                                stroke-width="0.1"
-                              />
-                              <path
-                                d="M8.45558 7.25664V7.40664H8.60558H9.66065C9.72481 7.40664 9.74667 7.42274 9.75141 7.42691C9.75148 7.42808 9.75146 7.42993 9.75116 7.43262C9.75001 7.44265 9.74458 7.46304 9.72525 7.49314C9.72522 7.4932 9.72518 7.49326 9.72514 7.49332L7.86959 10.3529L7.86924 10.3534C7.83227 10.4109 7.79863 10.418 7.78568 10.418C7.77272 10.418 7.73908 10.4109 7.70211 10.3534L7.70177 10.3529L5.84621 7.49332C5.84617 7.49325 5.84612 7.49318 5.84608 7.49311C5.82677 7.46302 5.82135 7.44264 5.8202 7.43262C5.81989 7.42993 5.81987 7.42808 5.81994 7.42691C5.82469 7.42274 5.84655 7.40664 5.91071 7.40664H6.96578H7.11578V7.25664V0.633865C7.11578 0.42434 7.29014 0.249976 7.49967 0.249976H8.07169C8.28121 0.249976 8.45558 0.42434 8.45558 0.633865V7.25664Z"
-                                fill="currentColor"
-                                stroke="currentColor"
-                                stroke-width="0.3"
-                              />
-                            </svg>
-                          </button>
+                          <span>Order ID</span>
                         </div>
                       </th>
 
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
+                        className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right "
                       >
                         Date
                       </th>
 
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
+                        className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right "
                       >
                         Status
                       </th>
 
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
+                        className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right "
                       >
-                        Customer
+                        Products Purchased
                       </th>
 
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
+                        className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right "
                       >
-                        Purchase
+                        Total Amount
                       </th>
 
                       <th scope="col" className="relative py-3.5 px-4">
@@ -83,239 +82,71 @@ function myOrders() {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 ">
-                    <tr>
-                      <td className="px-4 py-4 text-sm font-medium text-gray-700  whitespace-nowrap">
-                        <div className="inline-flex items-center gap-x-3">
-                          <span>#3066</span>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        Jan 6, 2022
-                      </td>
-                      <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                        <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 ">
-                          <svg
-                            width="12"
-                            height="12"
-                            viewBox="0 0 12 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M10 3L4.5 8.5L2 6"
-                              stroke="currentColor"
-                              stroke-width="1.5"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
+                    {Object.keys(products).map((items) => {
+                      const timestamp = products[items].updatedAt;
+                      const dateOnly = new Date(timestamp)
+                        .toISOString()
+                        .split("T")[0];
+                      const item = products[items].products;
 
-                          <h2 className="text-sm font-normal">Delivered</h2>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        <div className="flex items-center gap-x-2">
-                          <div>
-                            <h2 className="text-sm font-medium text-gray-800 ">
-                              Arthur Melo
-                            </h2>
-                            <p className="text-xs font-normal text-gray-600 ">
-                              authurmelo@example.com
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        Monthly subscription
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td className="px-4 py-4 text-sm font-medium text-gray-700  whitespace-nowrap">
-                        <div className="inline-flex items-center gap-x-3">
-                          <span>#3065</span>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        Jan 5, 2022
-                      </td>
-                      <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                        <div className="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2 bg-red-100/60 ">
-                          <svg
-                            width="12"
-                            height="12"
-                            viewBox="0 0 12 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M9 3L3 9M3 3L9 9"
-                              stroke="currentColor"
-                              stroke-width="1.5"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-
-                          <h2 className="text-sm font-normal">Cancelled</h2>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        <div className="flex items-center gap-x-2">
-                          <div>
-                            <h2 className="text-sm font-medium text-gray-800 ">
-                              Andi Lane
-                            </h2>
-                            <p className="text-xs font-normal text-gray-600 ">
-                              andi@example.com
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        Monthly subscription
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td className="px-4 py-4 text-sm font-medium text-gray-700  whitespace-nowrap">
-                        <div className="inline-flex items-center gap-x-3">
-                          <span>#3064</span>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        Jan 5, 2022
-                      </td>
-                      <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                        <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 ">
-                          <svg
-                            width="12"
-                            height="12"
-                            viewBox="0 0 12 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M10 3L4.5 8.5L2 6"
-                              stroke="currentColor"
-                              stroke-width="1.5"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-
-                          <h2 className="text-sm font-normal">Delivered</h2>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        <div className="flex items-center gap-x-2">
-                          <div>
-                            <h2 className="text-sm font-medium text-gray-800  ">
-                              Kate Morrison
-                            </h2>
-                            <p className="text-xs font-normal text-gray-600 ">
-                              kate@example.com
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        Monthly subscription
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td className="px-4 py-4 text-sm font-medium text-gray-700  whitespace-nowrap">
-                        <div className="inline-flex items-center gap-x-3">
-                          <span>#3063</span>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        Jan 4, 2022
-                      </td>
-                      <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                        <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 ">
-                          <svg
-                            width="12"
-                            height="12"
-                            viewBox="0 0 12 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M10 3L4.5 8.5L2 6"
-                              stroke="currentColor"
-                              stroke-width="1.5"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-                          <h2 className="text-sm font-normal">Delivered</h2>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        <div className="flex items-center gap-x-2">
-                          <div>
-                            <h2 className="text-sm font-medium text-gray-800  ">
-                              Candice Wu
-                            </h2>
-                            <p className="text-xs font-normal text-gray-600 ">
-                              candice@example.com
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        Monthly subscription
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td className="px-4 py-4 text-sm font-medium text-gray-700  whitespace-nowrap">
-                        <div className="inline-flex items-center gap-x-3">
-                          <span>#3062</span>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        Jan 4, 2022
-                      </td>
-                      <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                        <div className="inline-flex items-center px-3 py-1 text-gray-500 rounded-full gap-x-2 bg-gray-100/60 ">
-                          <svg
-                            width="12"
-                            height="12"
-                            viewBox="0 0 12 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M4.5 7L2 4.5M2 4.5L4.5 2M2 4.5H8C8.53043 4.5 9.03914 4.71071 9.41421 5.08579C9.78929 5.46086 10 5.96957 10 6.5V10"
-                              stroke="#667085"
-                              stroke-width="1.5"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-
-                          <h2 className="text-sm font-normal">Refunded</h2>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        <div className="flex items-center gap-x-2">
-                          <div>
-                            <h2 className="text-sm font-medium text-gray-800  ">
-                              Orlando Diggs
-                            </h2>
-                            <p className="text-xs font-normal text-gray-600 ">
-                              orlando@example.com
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        Monthly subscription
-                      </td>
-                    </tr>
+                      return (
+                        <tr key={items.orderID}>
+                          <td className="px-4 py-4 text-sm font-medium text-gray-700  whitespace-nowrap">
+                            <div className="inline-flex items-center gap-x-3">
+                              <span>{products[items]._id}</span>
+                            </div>
+                          </td>
+                          <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                            {dateOnly}
+                          </td>
+                          <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            {products[items].status == "paid" ? (
+                              <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60">
+                                <FaCheck />
+                                <h2 className="text-sm font-bold">
+                                  {products[items].status}
+                                </h2>
+                              </div>
+                            ) : (
+                              <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-red-500 bg-red-100/60">
+                                <FaXmark />
+                                <h2 className="text-sm font-bold">
+                                  {products[items].status}
+                                </h2>
+                              </div>
+                            )}
+                          </td>
+                          <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                            <div className="flex items-center gap-x-2">
+                              <div className="space-y-2">
+                                {Object.keys(item).map((i) => {
+                                  return (
+                                    <div
+                                      key={item[i].price}
+                                      className="flex items-center space-x-6"
+                                    >
+                                      <Image
+                                        className="rounded-lg"
+                                        src={item[i].img}
+                                        width={40}
+                                        height={0}
+                                        alt=""
+                                      />
+                                      <h2 className="text-sm font-medium text-gray-800 ">
+                                        {item[i].desc}
+                                      </h2>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                            ₹ {products[items].amount}
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -327,4 +158,4 @@ function myOrders() {
   );
 }
 
-export default myOrders;
+export default MyOrders;

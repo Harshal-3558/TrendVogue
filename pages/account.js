@@ -1,7 +1,15 @@
 import Image from "next/image";
 import React from "react";
 
-function account() {
+function account({
+  user,
+  cart,
+  total,
+  addCart,
+  clearCart,
+  removeFromCart,
+}) {
+  console.log(user)
   return (
     <div className="bg-slate-100 py-12 flex justify-center">
       <div className="border rounded-lg p-5 shadow-xl bg-white space-y-8 w-[1000px]">

@@ -37,7 +37,7 @@ function contact() {
                 </svg>
 
                 <span className="mx-2 text-white truncate w-72">
-                  Cecilia Chapman 711-2880 Nulla St. Mankato Mississippi 96522
+                  Maharashtra, Raigad, Panvel - 410206
                 </span>
               </p>
 
@@ -58,7 +58,7 @@ function contact() {
                 </svg>
 
                 <span className="mx-2 text-white truncate w-72">
-                  (257) 563-7401
+                  +91-7900077477
                 </span>
               </p>
 
@@ -79,7 +79,7 @@ function contact() {
                 </svg>
 
                 <span className="mx-2 text-white truncate w-72">
-                  acb@example.com
+                  patilharshal3558@gmail.com
                 </span>
               </p>
             </div>

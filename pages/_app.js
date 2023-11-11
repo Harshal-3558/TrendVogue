@@ -2,7 +2,7 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import "@/styles/globals.css";
 import { Nunito } from "next/font/google";
-import { React, useContext, useState, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import LoadingBar from "react-top-loading-bar";
 import { useRouter } from "next/router";
 const nunito = Nunito({
@@ -12,21 +12,26 @@ const nunito = Nunito({
 });
 
 export default function App({ Component, pageProps }) {
-  const [cart, setCart] = useState({});
-  const [total, setTotal] = useState(0);
-  const [user, setUser] = useState({ value: null });
-  const [key, setKey] = useState(0);
-  const [progress, setProgress] = useState(0); //Top loading bar
+  const [cart, setCart] = useState({}); // State for shopping cart
+  const [total, setTotal] = useState(0); // State for total price
+  const [user, setUser] = useState({ value: null }); // State for user data
+  const [key, setKey] = useState(0); // State for re-rendering component
+  const [progress, setProgress] = useState(0); // State for top loading bar
   const router = useRouter();
 
   useEffect(() => {
+    // Update progress when routing starts
     router.events.on("routeChangeStart", () => {
-      setProgress(40); // Above function is used to update progress when routing is completed
+      setProgress(40);
     });
+
+    // Update progress when routing completes
     router.events.on("routeChangeComplete", () => {
-      setProgress(100); // Above function is used to update progress when routing is completed
+      setProgress(100);
     });
+
     try {
+      // Initialize cart from local storage if available
       if (localStorage.getItem("cart")) {
         setCart(JSON.parse(localStorage.getItem("cart")));
         saveCart(JSON.parse(localStorage.getItem("cart")));
@@ -35,22 +40,23 @@ export default function App({ Component, pageProps }) {
       console.error(err);
       localStorage.clear();
     }
-    //Login and SignUp data
+
+    // Get user data from local storage
     const token = localStorage.getItem("token");
     if (token) {
       setUser({ value: token });
-      setKey(Math.random()); //used to re-render the component
     }
-  }, [router.query]); //since useEffect will not run due to router.push hence used router.query
+    setKey(Math.random());
+  }, [router.query]);
 
-  //Logout
+  // Logout user
   const logout = () => {
     localStorage.removeItem("token");
     setUser({ value: null });
-    setKey(Math.random()); //used to re-render the component
+    setKey(Math.random());
   };
 
-  // Add to Cart
+  // Add item to cart
   const addCart = (itemCode, desc, qty, color, size, price, img) => {
     let newCart = cart;
     if (itemCode in cart) {
@@ -62,7 +68,7 @@ export default function App({ Component, pageProps }) {
     saveCart(newCart);
   };
 
-  //Save to cart
+  // Save cart to local storage and update total price
   const saveCart = (myCart) => {
     localStorage.setItem("cart", JSON.stringify(myCart));
     let subTotal = 0;
@@ -73,13 +79,13 @@ export default function App({ Component, pageProps }) {
     setTotal(subTotal);
   };
 
-  //clear cart
+  // Clear cart
   const clearCart = () => {
     setCart({});
     saveCart({});
   };
 
-  //Remove from cart
+  // Remove item from cart
   const removeFromCart = (itemCode, desc, qty, color, size, price) => {
     let newCart = cart;
     if (itemCode in cart) {
@@ -92,7 +98,7 @@ export default function App({ Component, pageProps }) {
     saveCart(newCart);
   };
 
-  //Buy Now
+  // Buy item now
   const buyNow = (itemCode, desc, qty, color, size, price, img) => {
     let newCart = { itemCode: { qty: 1, price, desc, size, color, img } };
     setCart(newCart);
@@ -128,6 +134,7 @@ export default function App({ Component, pageProps }) {
           clearCart={clearCart}
           removeFromCart={removeFromCart}
           buyNow={buyNow}
+          
           {...pageProps}
         />
         <Footer />

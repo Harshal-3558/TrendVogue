@@ -3,18 +3,15 @@ const { Schema } = mongoose;
 
 const orderSchema = new Schema(
   {
-    userID: { type: String, required: true }, // type: String is shorthand for {type: type: String}
-    products: [
-      {
-        productID: { type: String, required: true },
-        quantity: { type: Number, default: 1 },
-      },
-    ],
+    email: { type: String, required: true }, // type: String is shorthand for {type: type: String}
+    orderID: { type: String, required: true },
+    TransactionID: { type: String, required: true },
+    products: { type: Object, required: true },
     address: { type: String, required: true },
     amount: { type: Number, required: true },
     status: { type: String, default: "Pending", required: true },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 // mongoose.models = {};

@@ -1,131 +1,194 @@
-import React from "react";
-import Head from "next/head";
-import Script from "next/script";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export default function orders({
-  user,
-  cart,
-  total,
-  addCart,
-  clearCart,
-  removeFromCart,
-}) {
-  const initiatePayment = async() => {
-    // Get a transaction token
-    const data = {cart,total}
-   
-  const response = await fetch(`${NEXT_PUBLIC_HOST}/api/preTransaction`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data), 
-  });
-  let a = await response.json();
-  console.log(a)
+export default function Orders({ cart, total }) {
+  const router = useRouter();
+  const [name, setName] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [disabled, setDisabled] = useState(true);
+  const handleChange = async (e) => {
+    console.log(cart);
+    if (e.target.name == "email") {
+      setEmail(e.target.value);
+    } else if (e.target.name == "name") {
+      setName(e.target.value);
+    } else if (e.target.name == "address") {
+      setAddress(e.target.value);
+    } else if (e.target.name == "pincode") {
+      setPincode(e.target.value);
+      if (e.target.value.length == 6) {
+        let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
+        let pinJSON = await pins.json();
+        if (Object.keys(pinJSON).includes(e.target.value)) {
+          const array = pinJSON[e.target.value];
+          setCity(array[0]);
+          setState(array[1]);
+        } else {
+          toast.error("Please Enter a valid pincode", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          setCity("");
+          setState("");
+        }
+      }
+    } else if (e.target.name == "address") {
+      setPassword(e.target.value);
+    } else if (e.target.name == "phone") {
+      setPhone(e.target.value);
+    } else if (e.target.name == "city") {
+      setCity(e.target.value);
+    }
 
-    let amount;
-    var config = {
-      root: "",
-      flow: "DEFAULT",
-      data: {
-        orderId: Math.random() /* update order id */,
-        token: "" /* update token value */,
-        tokenType: txnToken,
-        amount: amount /* update amount */,
-      },
-      handler: {
-        notifyMerchant: function (eventName, data) {
-          console.log("notifyMerchant handler function called");
-          console.log("eventName => ", eventName);
-          console.log("data => ", data);
-        },
-      },
-    };
-
-    // initialze configuration using init method
-    window.Paytm.CheckoutJS.init(config)
-      .then(function onSuccess() {
-        // after successfully updating configuration, invoke JS Checkout
-        window.Paytm.CheckoutJS.invoke();
-      })
-      .catch(function onError(error) {
-        console.log("error => ", error);
-      });
+    if (
+      name.length > 3 &&
+      email.length > 3 &&
+      phone.length > 3 &&
+      address.length > 3 &&
+      pincode.length > 3
+    ) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
   };
+
+  async function initializePayments() {
+    const data = { cart, email, address };
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_HOST}/api/preTransaction`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const res = await response.json();
+    if (res.success === "true") {
+      router.push(res.url);
+    } else {
+      toast.error(res.message, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  }
   return (
     <div className="p-4 space-y-4">
-      <Head>
-        <meta
-          name="viewport"
-          content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0"
-        />
-      </Head>
-      <Script
-        type="application/javascript"
-        src={`${process.env.PAYTM_HOST}/merchantpgpui/checkoutjs/merchants/${process.env.PAYTM_MID}.js`}
-        onload="onScriptLoad();"
-        crossorigin="anonymous"
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="colored"
       />
       {/* DELIVERY ADDRESS */}
       <div className="h-90 w-full bg-slate-200 rounded-lg">
         <div className="bg-red-500 h-8 text-white flex items-center pl-2 rounded-t-lg">
-          <p>DELIVERY ADDRESS</p>
+          <p>Delivery Address</p>
         </div>
         <div className="p-5 md:space-y-3">
           <div className="md:flex md:space-x-4 space-y-4 md:space-y-0">
             <input
+              onChange={handleChange}
+              value={name}
+              type="text"
+              name="name"
               className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg w-full"
-              placeholder="Pincode"
+              placeholder="Name"
             ></input>
             <input
+              onChange={handleChange}
+              value={email}
               className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg w-full"
-              placeholder="Locality"
+              placeholder="Email"
+              name="email"
+              type="email"
             ></input>
           </div>
           <div className="mt-4 md:my-0">
             <textarea
+              onChange={handleChange}
+              value={address}
               className="w-full p-1 border-2 border-slate-300 focus:outline-none focus:border-red-400 rounded-lg"
               rows="5"
               cols="33"
               placeholder="Address (Area and Street)"
+              name="address"
+              type="text"
             ></textarea>
           </div>
           <div className="md:flex md:space-x-4 space-y-4 md:space-y-0 mt-3 md:mt-0">
             <input
-              className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg  w-full"
-              placeholder="City/District/Town"
+              onChange={handleChange}
+              value={pincode}
+              className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg w-full"
+              placeholder="Pincode"
+              name="pincode"
+              type="text"
             ></input>
-            <select className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg w-full">
-              <option value="">--Select State--</option>
-              <option value="dog">Maharashtra</option>
-              <option value="cat">Gujrat</option>
-              <option value="hamster">Kerla</option>
-              <option value="parrot">Karnataka</option>
-              <option value="spider">Uttar Pradesh</option>
-              <option value="goldfish">Tamil Nadu</option>
-            </select>
+            <input
+              onChange={handleChange}
+              value={phone}
+              className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg w-full"
+              placeholder="Phone"
+              name="phone"
+              type="text"
+            ></input>
           </div>
           <div className="md:flex md:space-x-4 space-y-4 md:space-y-0 mt-3 md:mt-0">
             <input
-              className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg w-full"
-              placeholder="Landmark (Optional)"
+              onChange={handleChange}
+              value={city}
+              className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg  w-full"
+              placeholder="City/District/Town"
+              name="city"
+              type="text"
+              readOnly={true}
             ></input>
             <input
-              className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg w-full"
-              placeholder="Alternate Phone (Optional)"
+              onChange={handleChange}
+              value={state}
+              className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg  w-full"
+              placeholder="State"
+              name="state"
+              type="text"
+              readOnly={true}
             ></input>
           </div>
-          <button className="bg-red-500 mt-6 md:mt-0 px-5 py-2 text-white text-sm rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300">
-            SAVE AND DELIVER HERE
-          </button>
         </div>
       </div>
 
       {/* ORDER SUMMARY */}
       <div className=" w-full bg-slate-200 rounded-lg">
         <div className="bg-red-500 h-8 text-white flex items-center pl-2 rounded-t-lg">
-          <p>ORDER SUMMARY</p>
+          <p>Order Summary</p>
         </div>
         <div className="p-5 space-y-2">
           {Object.keys(cart).map((k) => {
@@ -145,21 +208,14 @@ export default function orders({
           </div>
           <div className="pt-5">
             <button
-              onClick={initiatePayment}
-              className="bg-red-500 px-5 py-2 text-white text-sm rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300"
+              onClick={initializePayments}
+              className="disabled:bg-red-400 bg-red-500 px-5 py-2 text-white text-base rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300"
             >
-              PAYMENT TRANSACTION
+              Proceed for Payment
             </button>
           </div>
         </div>
       </div>
-
-      {/* PAYMENT OPTION */}
-      {/* <div className=" w-full bg-slate-200 rounded-lg">
-        <div className="bg-red-500 h-8 text-white flex items-center pl-2 rounded-t-lg">
-          <p>PAYMENT OPTION</p>
-        </div>
-      </div> */}
     </div>
   );
 }

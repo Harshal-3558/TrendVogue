@@ -7,32 +7,24 @@ import product from "@/models/product";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Page({
-  product,
-  variant,
-  user,
-  cart,
-  total,
-  addCart,
-  clearCart,
-  removeFromCart,
-  buyNow,
-}) {
+export default function Page({ product, variant, stock, addCart, buyNow }) {
   const router = useRouter();
   const slug = router.query.slug;
   const [pin, setPin] = useState("");
   const [service, setService] = useState(null);
   const [color, setColor] = useState(product.color);
   const [size, setSize] = useState(product.size);
+
   const handleService = async () => {
     let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
     let pinJSON = await pins.json();
-    if (pinJSON.includes(parseInt(pin))) {
+    if (Object.keys(pinJSON).includes(pin)) {
       setService(true);
     } else {
       setService(false);
     }
   };
+
   const changePin = (e) => {
     setPin(e.target.value);
   };
@@ -42,8 +34,8 @@ export default function Page({
     );
     setColor(newColor);
     setSize(newSize);
-    //  router.reload()
   };
+
   return (
     <div className="py-12">
       <ToastContainer
@@ -206,8 +198,16 @@ export default function Page({
               )}
             </div>
           </div>
-          <div className="space-x-3 border-b-4 py-4">
+          <div className="space-y-3 border-b-4 py-4">
+            {stock < 1 ? (
+              <h1 className="text-red-500 font-bold text-lg">
+                Currently Out of Stock !
+              </h1>
+            ) : (
+              ""
+            )}
             <button
+              disabled={stock < 1 ? true : false}
               onClick={() => {
                 addCart(
                   slug,
@@ -229,11 +229,12 @@ export default function Page({
                   theme: "colored",
                 });
               }}
-              className="bg-red-500 px-9 md:px-5 py-2 text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300"
+              className="bg-red-500 disabled:bg-red-400 px-9 md:px-5 md:me-7 py-2 text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300"
             >
               ADD TO CART
             </button>
             <button
+              disabled={stock < 1 ? true : false}
               onClick={() => {
                 buyNow(
                   slug,
@@ -245,7 +246,7 @@ export default function Page({
                   product.img
                 );
               }}
-              className="bg-red-500 px-8 md:px-5 py-2 text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300"
+              className="bg-red-500 disabled:bg-red-400 px-8 md:px-5 py-2 text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300"
             >
               BUY NOW
             </button>
@@ -287,25 +288,44 @@ export default function Page({
   );
 }
 
+// This function is an async function that fetches data from the server.
+// It takes a 'context' parameter which contains information about the request.
 export async function getServerSideProps(context) {
+  // Check if the mongoose connection is not ready, and if so, connect to the MongoDB server using the MONGO_URI environment variable.
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
+
+  // Find a product based on the slug provided in the context query.
   let products = await product.findOne({ slug: context.query.slug });
+
+  console.log(products.available);
+
+  // Find variants of the product based on the description of the product.
   let variants = await product.find({ description: products.description });
-  let colorSizeSlug = {}; //{red:{xl:{slug:'wear-the-code-xl'}}}
+
+  // Create an empty object to store color, size, and slug information.
+  let colorSizeSlug = {};
+
+  // Iterate over each variant and populate the colorSizeSlug object.
   for (let item of variants) {
+    // Check if the color already exists as a key in the colorSizeSlug object.
     if (Object.keys(colorSizeSlug).includes(item.color)) {
+      // If the color exists, add the size and slug information to the existing color key.
       colorSizeSlug[item.color][item.size] = { slug: item.slug, img: item.img };
     } else {
+      // If the color doesn't exist, create a new color key and add the size and slug information.
       colorSizeSlug[item.color] = {};
       colorSizeSlug[item.color][item.size] = { slug: item.slug, img: item.img };
     }
   }
+
+  // Return an object with 'props' key that contains the products and variant information.
   return {
     props: {
       product: JSON.parse(JSON.stringify(products)),
       variant: JSON.parse(JSON.stringify(colorSizeSlug)),
+      stock: JSON.stringify(products.available),
     },
   };
 }

@@ -61,13 +61,13 @@ export default function Navbar({ user, logout }) {
               </Link>
               <Link
                 className="hover:text-red-600 hover:underline underline-offset-8 decoration-2"
-                href="/MenTshirt"
+                href="/aboutUs"
               >
                 About Us
               </Link>
               <Link
                 className="hover:text-red-600 hover:underline underline-offset-8 decoration-2"
-                href="/WomenTshirt"
+                href="/aboutUs"
               >
                 Customer Service
               </Link>
