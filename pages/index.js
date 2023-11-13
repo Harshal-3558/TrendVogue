@@ -13,29 +13,27 @@ import { useCallback } from "react";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa6";
 
 export default function Home() {
- 
-  
   // Define autoplay options
   const autoplayOptions = {
-    delay: 2000, 
+    delay: 2000,
     rootNode: (emblaRoot) => emblaRoot.parentElement,
   };
-  
+
   // Initialize the first Embla Carousel instance
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay(autoplayOptions),
   ]);
-  
+
   // Initialize the second Embla Carousel instance
   const [emblaRef1, emblaApi1] = useEmblaCarousel({ loop: true }, [
     Autoplay(autoplayOptions),
   ]);
-  
+
   // Scroll to the previous slide
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
   }, [emblaApi]);
-  
+
   // Scroll to the next slide
   const scrollNext = useCallback(() => {
     if (emblaApi) emblaApi.scrollNext();
@@ -194,7 +192,7 @@ export default function Home() {
           <h1 className="mb-2 text-center text-xl md:text-2xl font-bold text-red-600 md:mb-12 lg:text-4xl">
             TOO HOT TO BE MISSED
           </h1>
-        
+
           {/* Embla Carousel */}
           <div className="embla">
             {/* Embla Viewport */}
@@ -204,7 +202,7 @@ export default function Home() {
                 {/* Slide 1 */}
                 <Link href={"/aboutUs"} className="embla__slide1">
                   <Image
-                  className="rounded-xl"
+                    className="rounded-xl"
                     width={400}
                     height={50}
                     src={
@@ -214,11 +212,11 @@ export default function Home() {
                     alt="Banner"
                   />
                 </Link>
-        
+
                 {/* Slide 2 */}
                 <Link href={"/MenTshirt"} className="embla__slide1">
                   <Image
-                  className="rounded-xl"
+                    className="rounded-xl"
                     width={400}
                     height={50}
                     src={
@@ -228,11 +226,11 @@ export default function Home() {
                     alt="Banner"
                   />
                 </Link>
-        
+
                 {/* Slide 3 */}
                 <Link href={"/MenTshirt"} className="embla__slide1">
                   <Image
-                  className="rounded-xl"
+                    className="rounded-xl"
                     width={400}
                     height={50}
                     src={
@@ -242,11 +240,11 @@ export default function Home() {
                     alt="Banner"
                   />
                 </Link>
-        
+
                 {/* Slide 4 */}
                 <Link href={"/MenTshirt"} className="embla__slide1">
                   <Image
-                  className="rounded-xl"
+                    className="rounded-xl"
                     width={400}
                     height={50}
                     src={
@@ -256,11 +254,11 @@ export default function Home() {
                     alt="Banner"
                   />
                 </Link>
-        
+
                 {/* Slide 5 */}
                 <Link href={"/MenTshirt"} className="embla__slide1">
                   <Image
-                  className="rounded-xl"
+                    className="rounded-xl"
                     width={400}
                     height={50}
                     src={

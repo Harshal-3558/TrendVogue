@@ -1,19 +1,53 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { FaStar, FaLocationDot } from "react-icons/fa6";
 const mongoose = require("mongoose");
 import product from "@/models/product";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { jwtDecode } from "jwt-decode";
 
-export default function Page({ product, variant, stock, addCart, buyNow }) {
+export default function Page({
+  product,
+  variant,
+  stock,
+  addCart,
+  buyNow,
+  user,
+}) {
   const router = useRouter();
   const slug = router.query.slug;
   const [pin, setPin] = useState("");
   const [service, setService] = useState(null);
   const [color, setColor] = useState(product.color);
   const [size, setSize] = useState(product.size);
+
+  const addToCart = async (itemCode, desc, qty, color, size, price, img) => {
+    const item = localStorage.getItem("token");
+    const decoded = await jwtDecode(item);
+    const email = decoded.email;
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_HOST}/api/addCart`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          itemCode,
+          desc,
+          qty,
+          color,
+          size,
+          price,
+          img,
+        }),
+      },
+    );
+    const res = await response.json();
+  };
 
   const handleService = async () => {
     let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
@@ -30,7 +64,7 @@ export default function Page({ product, variant, stock, addCart, buyNow }) {
   };
   const refreshVariant = (newColor, newSize) => {
     router.push(
-      `${process.env.NEXT_PUBLIC_HOST}/product/${variant[newColor][newSize]["slug"]}`
+      `${process.env.NEXT_PUBLIC_HOST}/product/${variant[newColor][newSize]["slug"]}`,
     );
     setColor(newColor);
     setSize(newSize);
@@ -209,14 +243,14 @@ export default function Page({ product, variant, stock, addCart, buyNow }) {
             <button
               disabled={stock < 1 ? true : false}
               onClick={() => {
-                addCart(
+                addToCart(
                   slug,
                   product.description,
                   1,
                   color,
                   size,
                   product.price,
-                  product.img
+                  product.img,
                 );
                 toast.success("Item added to cart", {
                   position: "top-center",
@@ -243,7 +277,7 @@ export default function Page({ product, variant, stock, addCart, buyNow }) {
                   color,
                   size,
                   product.price,
-                  product.img
+                  product.img,
                 );
               }}
               className="bg-red-500 disabled:bg-red-400 px-8 md:px-5 py-2 text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300"
@@ -288,39 +322,26 @@ export default function Page({ product, variant, stock, addCart, buyNow }) {
   );
 }
 
-// This function is an async function that fetches data from the server.
-// It takes a 'context' parameter which contains information about the request.
 export async function getServerSideProps(context) {
-  // Check if the mongoose connection is not ready, and if so, connect to the MongoDB server using the MONGO_URI environment variable.
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
 
-  // Find a product based on the slug provided in the context query.
   let products = await product.findOne({ slug: context.query.slug });
 
-  console.log(products.available);
-
-  // Find variants of the product based on the description of the product.
   let variants = await product.find({ description: products.description });
 
-  // Create an empty object to store color, size, and slug information.
   let colorSizeSlug = {};
 
-  // Iterate over each variant and populate the colorSizeSlug object.
   for (let item of variants) {
-    // Check if the color already exists as a key in the colorSizeSlug object.
     if (Object.keys(colorSizeSlug).includes(item.color)) {
-      // If the color exists, add the size and slug information to the existing color key.
       colorSizeSlug[item.color][item.size] = { slug: item.slug, img: item.img };
     } else {
-      // If the color doesn't exist, create a new color key and add the size and slug information.
       colorSizeSlug[item.color] = {};
       colorSizeSlug[item.color][item.size] = { slug: item.slug, img: item.img };
     }
   }
 
-  // Return an object with 'props' key that contains the products and variant information.
   return {
     props: {
       product: JSON.parse(JSON.stringify(products)),

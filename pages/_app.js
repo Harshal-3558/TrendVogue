@@ -47,6 +47,7 @@ export default function App({ Component, pageProps }) {
       setUser({ value: token });
     }
     setKey(Math.random());
+    // eslint-disable-next-line
   }, [router.query]);
 
   // Logout user
@@ -71,6 +72,16 @@ export default function App({ Component, pageProps }) {
   // Save cart to local storage and update total price
   const saveCart = (myCart) => {
     localStorage.setItem("cart", JSON.stringify(myCart));
+    let subTotal = 0;
+    let keys = Object.keys(myCart);
+    for (let i = 0; i < keys.length; i++) {
+      subTotal += myCart[keys[i]].price * myCart[keys[i]].qty;
+    }
+    setTotal(subTotal);
+  };
+
+  // get cart from database and update total price
+  const saveDataCart = (myCart) => {
     let subTotal = 0;
     let keys = Object.keys(myCart);
     for (let i = 0; i < keys.length; i++) {
@@ -127,6 +138,7 @@ export default function App({ Component, pageProps }) {
           buyNow={buyNow}
         />
         <Component
+          saveDataCart={saveDataCart}
           user={user}
           cart={cart}
           total={total}
@@ -134,7 +146,6 @@ export default function App({ Component, pageProps }) {
           clearCart={clearCart}
           removeFromCart={removeFromCart}
           buyNow={buyNow}
-          
           {...pageProps}
         />
         <Footer />

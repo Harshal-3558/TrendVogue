@@ -18,7 +18,7 @@ function MyOrders({}) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(decoded),
-        }
+        },
       );
       const res = await response.json();
 

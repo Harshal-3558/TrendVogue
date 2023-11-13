@@ -1,27 +1,94 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FaPlus, FaMinus, FaTrashCan, FaCircleCheck } from "react-icons/fa6";
 import Link from "next/link";
 import Image from "next/image";
+import { jwtDecode } from "jwt-decode";
+import { useRouter } from "next/router";
 
-function Cart({ user, cart, total, addCart, clearCart, removeFromCart }) {
+function Cart({
+  user,
+  cart,
+  total,
+  addCart,
+  clearCart,
+  removeFromCart,
+  saveDataCart,
+}) {
+  const [items, setItems] = useState("");
+  const router = useRouter();
+  useEffect(() => {
+    const getCartItems = async () => {
+      const item = localStorage.getItem("token");
+      const decoded = await jwtDecode(item);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_HOST}/api/getCart`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ decoded }),
+        },
+      );
+      const res = await response.json();
+      setItems(res.cartItem);
+      saveDataCart(res.cartItem);
+    };
+    getCartItems();
+    // eslint-disable-next-line
+  }, [!items]);
+
+  const removeCartItems = async (k) => {
+    const ID = items[k]._id;
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_HOST}/api/removeCart`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ID }),
+      },
+    );
+    const res = await response.json();
+    router.reload();
+  };
+
+  const addCartItems = async (k) => {
+    const email = items[k].email;
+    const itemCode = items[k].itemCode;
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_HOST}/api/addCart`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, itemCode }),
+      },
+    );
+    const res = await response.json();
+    router.reload();
+  };
+
   return (
     <>
       <div className="md:flex md:m-2">
         <div className="md:w-[900px]">
-          {Object.keys(cart).length === 0 && (
+          {Object.keys(items).length === 0 && (
             <div className={" m-2 bg-gray-200 rounded-md p-2 space-x-7"}>
               Your cart is empty !
             </div>
           )}
-          {Object.keys(cart).map((k) => {
+          {Object.keys(items).map((k) => {
             return (
               <div
-                key={cart[k].desc}
+                key={items[k].desc}
                 className="flex m-2 bg-gray-200 rounded-md p-2 space-x-7"
               >
                 <div className="flex flex-col justify-center">
                   <Image
-                    src={cart[k].img}
+                    src={items[k].img}
                     width={200}
                     height={50}
                     alt="Banner"
@@ -30,30 +97,16 @@ function Cart({ user, cart, total, addCart, clearCart, removeFromCart }) {
                   <div className="flex space-x-3 mt-3 justify-center items-center">
                     <button
                       onClick={() => {
-                        addCart(
-                          k,
-                          cart[k].description,
-                          cart[k].qty,
-                          cart[k].color,
-                          cart[k].size,
-                          cart[k].price
-                        );
+                        addCartItems(k);
                       }}
                       className="bg-red-500 hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring focus:ring-red-300 p-2 rounded-md text-white"
                     >
                       <FaPlus />
                     </button>
-                    <p>{cart[k].qty}</p>
+                    <p>{items[k].qty}</p>
                     <button
                       onClick={() => {
-                        removeFromCart(
-                          k,
-                          cart[k].description,
-                          cart[k].qty,
-                          cart[k].color,
-                          cart[k].size,
-                          cart[k].price
-                        );
+                        removeCartItems(k);
                       }}
                       className="bg-red-500 hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring focus:ring-red-300 p-2 rounded-md text-white"
                     >
@@ -62,26 +115,19 @@ function Cart({ user, cart, total, addCart, clearCart, removeFromCart }) {
                   </div>
                 </div>
                 <div className="text-sm md:text-lg">
-                  <p>{cart[k].desc}</p>
-                  <p className="font-extrabold">₹{cart[k].price}</p>
-                  <p>Color : {cart[k].color}</p>
-                  <p>Size : {cart[k].size}</p>
+                  <p>{items[k].desc}</p>
+                  <p className="font-extrabold">₹{items[k].price}</p>
+                  <p>Color : {items[k].color}</p>
+                  <p>Size : {items[k].size}</p>
                   <p className="text-green-600">In Stock</p>
                   <div>
                     <button
                       onClick={() => {
-                        removeFromCart(
-                          k,
-                          cart[k].description,
-                          cart[k].qty,
-                          cart[k].color,
-                          cart[k].size,
-                          cart[k].price
-                        );
+                        removeCartItems(k);
                       }}
                       className="relative top-2 right-1 bg-red-500 hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring focus:ring-red-300 p-2 rounded-md text-sm text-white z-0 md:text-base"
                     >
-                      Remove
+                      Delete
                     </button>
                   </div>
                 </div>

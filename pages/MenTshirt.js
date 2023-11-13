@@ -13,7 +13,7 @@ function MenTshirt({ products }) {
           {Object.keys(products).map((items) => {
             // Iterate over the keys of the 'products' object
             return (
-              <div key={items._id} className="lg:w-1/4 md:w-1/2 p-4 w-full">
+              <div key={products[items].slug} className="lg:w-1/4 md:w-1/2 p-4 w-full">
                 <Link
                   href={`/product/${products[items].slug}`}
                   className="block relative h-96 rounded-lg overflow-hidden"
