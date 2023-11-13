@@ -31,7 +31,11 @@ const handler = async (req, res) => {
       });
       await item.save();
     }
-    res.status(200).json({ item });
+
+    const cartItem = await cart.find({
+      email: req.body.email,
+    });
+    res.status(200).json({ cartItem });
   } else {
     res.status(400).json({ error: "This is not allowed" });
   }

@@ -40,6 +40,7 @@ function Cart({
 
   const removeCartItems = async (k) => {
     const ID = items[k]._id;
+    const email = items[k].email;
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_HOST}/api/removeCart`,
       {
@@ -47,11 +48,12 @@ function Cart({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ID }),
+        body: JSON.stringify({ ID, email }),
       },
     );
     const res = await response.json();
-    router.reload();
+    console.log(res);
+    refreshVariant(res.cartItem);
   };
 
   const addCartItems = async (k) => {
@@ -68,7 +70,29 @@ function Cart({
       },
     );
     const res = await response.json();
-    router.reload();
+    refreshVariant(res.cartItem);
+  };
+
+  const deleteCartItems = async (k) => {
+    const email = items[k].email;
+    const ID = items[k]._id;
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_HOST}/api/deleteCart`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, ID }),
+      },
+    );
+    const res = await response.json();
+    refreshVariant(res.cartItem);
+  };
+
+  const refreshVariant = (newItem) => {
+    setItems(newItem);
+    saveDataCart(newItem);
   };
 
   return (
@@ -123,7 +147,7 @@ function Cart({
                   <div>
                     <button
                       onClick={() => {
-                        removeCartItems(k);
+                        deleteCartItems(k);
                       }}
                       className="relative top-2 right-1 bg-red-500 hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring focus:ring-red-300 p-2 rounded-md text-sm text-white z-0 md:text-base"
                     >
