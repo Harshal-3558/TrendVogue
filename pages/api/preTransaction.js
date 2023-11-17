@@ -1,11 +1,26 @@
 import orders from "@/models/order";
 import connectDB from "@/middleware/mongoose";
+import product from "@/models/product";
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 const handler = async (req, res) => {
   if (req.method == "POST") {
     try {
-      const cart = req.body.cart;
+      const cart = req.body.items;
+
+      // To check whether the cart is not tampered
+      for (let item in cart) {
+        const product1 = await product.findOne({ slug: cart[item].itemCode });
+        // console.log(product1);
+        if (product1.price != cart[item].price) {
+          res.status(500).json({
+            success: "false",
+            message:
+              "Suspecious activity detected! Please reinitialize your cart!",
+          });
+        }
+      }
+
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         mode: "payment",
@@ -20,7 +35,7 @@ const handler = async (req, res) => {
               },
               unit_amount: cart[item].price * 100,
             },
-            quantity: req.body.cart[item].qty,
+            quantity: req.body.items[item].qty,
           };
         }),
         success_url: `${process.env.NEXT_PUBLIC_HOST}/successOrder?session_id={CHECKOUT_SESSION_ID}`,
@@ -30,7 +45,7 @@ const handler = async (req, res) => {
       const status = await session.payment_status;
       const amt = await session.amount_total;
 
-      //Initiate order with order ID
+      // Initiate order with order ID
       const order = new orders({
         email: req.body.email,
         orderID: ID,
@@ -45,7 +60,9 @@ const handler = async (req, res) => {
         .status(200)
         .json({ success: "true", url: session.url, session: session.id });
     } catch (e) {
-      res.status(500).json({ success: "false",message:"Your cart is empty !" });
+      res
+        .status(500)
+        .json({ success: "false", message: "Your cart is empty !" });
     }
   } else {
     res.status(405).json({ error: "Method Not Allowed" });

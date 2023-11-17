@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../public/logo1.png";
+import React, { useEffect } from "react";
 import {
   FaMagnifyingGlass,
   FaCircleUser,
@@ -18,8 +19,17 @@ import {
 } from "react-icons/fa6";
 import { useRef, useState } from "react";
 
-export default function Navbar({ user, logout }) {
+export default function Navbar({ user, logout, cart, itemDB }) {
   const [drop, setDrop] = useState(false);
+  const [product, setProduct] = useState([]);
+  useEffect(() => {
+    if (user) {
+      setProduct(itemDB);
+    } else {
+      setProduct(cart);
+    }
+  }, [cart, itemDB, user]);
+
   function toggleDropdown() {
     if (!drop) {
       setDrop(true);
@@ -45,7 +55,7 @@ export default function Navbar({ user, logout }) {
               <FaBars onClick={toggleCart} />
             </div>
             <div>
-              <Image className="h-8 w-full" src={logo} alt="logo" />
+              <Image className="w-full" src={logo} alt="logo" />
             </div>
           </div>
           <div className="flex space-x-16 items-center">
@@ -94,7 +104,7 @@ export default function Navbar({ user, logout }) {
             </div>
 
             {/* Login & Logout */}
-            {user.value ? (
+            {user ? (
               <FaCircleUser
                 className="text-3xl hover:text-red-500 cursor-pointer"
                 onClick={toggleDropdown}
@@ -109,7 +119,7 @@ export default function Navbar({ user, logout }) {
 
             {/* Dropdown Menu */}
             {drop && (
-              <div className="absolute top-16 right-5 rounded-lg shadow-2xl shadow-gray-400 h-44 w-44 text-lg p-4 space-y-2 bg-slate-200">
+              <div className="bg-red-100 absolute top-16 right-5 rounded-lg shadow-2xl shadow-gray-400 h-44 w-44 text-lg p-4 space-y-2">
                 <Link
                   href={"/account"}
                   className="flex space-x-3 items-center hover:text-red-500 cursor-pointer"
@@ -139,6 +149,14 @@ export default function Navbar({ user, logout }) {
                   <p>Log Out</p>
                 </div>
               </div>
+            )}
+            {Object.keys(product).length !== 0 ? (
+              <span class="absolute top-4 right-3 flex h-3 w-3">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+              </span>
+            ) : (
+              ""
             )}
             <Link href={"/cart"}>
               <FaCartShopping className="text-3xl hover:text-red-500 cursor-pointer" />

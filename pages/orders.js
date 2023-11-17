@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { jwtDecode } from "jwt-decode";
 
-export default function Orders({ cart, total }) {
+export default function Orders({ cart, total, saveDataCart, user }) {
   const router = useRouter();
   const [name, setName] = useState("");
   const [pincode, setPincode] = useState("");
@@ -13,8 +14,8 @@ export default function Orders({ cart, total }) {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [disabled, setDisabled] = useState(true);
+  const [items, setItems] = useState("");
   const handleChange = async (e) => {
-    console.log(cart);
     if (e.target.name == "email") {
       setEmail(e.target.value);
     } else if (e.target.name == "name") {
@@ -56,9 +57,11 @@ export default function Orders({ cart, total }) {
     if (
       name.length > 3 &&
       email.length > 3 &&
-      phone.length > 3 &&
-      address.length > 3 &&
-      pincode.length > 3
+      phone.length > 9 &&
+      address.length > 10 &&
+      pincode.length > 5 &&
+      city.length > 3 &&
+      state.length > 3
     ) {
       setDisabled(false);
     } else {
@@ -67,7 +70,19 @@ export default function Orders({ cart, total }) {
   };
 
   async function initializePayments() {
-    const data = { cart, email, address };
+    if (!items) {
+      toast.error("Cart is empty !", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+    const data = { items, email, address };
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_HOST}/api/preTransaction`,
       {
@@ -76,7 +91,7 @@ export default function Orders({ cart, total }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      }
+      },
     );
     const res = await response.json();
     if (res.success === "true") {
@@ -94,6 +109,37 @@ export default function Orders({ cart, total }) {
       });
     }
   }
+
+  useEffect(() => {
+    const getCartItems = async () => {
+      const item = localStorage.getItem("token");
+      const decoded = await jwtDecode(item);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_HOST}/api/getCart`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ decoded }),
+        },
+      );
+      const res = await response.json();
+      setItems(res.cartItem);
+      saveDataCart(res.cartItem);
+    };
+
+    const getUserDetails = async () => {
+      const item = localStorage.getItem("token");
+      const decoded = await jwtDecode(item);
+      setEmail(decoded.email);
+      setName(decoded.name);
+    };
+    getCartItems();
+    getUserDetails();
+    // eslint-disable-next-line
+  }, [!items]);
+
   return (
     <div className="p-4 space-y-4">
       <ToastContainer
@@ -109,7 +155,7 @@ export default function Orders({ cart, total }) {
         theme="colored"
       />
       {/* DELIVERY ADDRESS */}
-      <div className="h-90 w-full bg-slate-200 rounded-lg">
+      <div className="h-90 w-full bg-gray-200 rounded-lg">
         <div className="bg-red-500 h-8 text-white flex items-center pl-2 rounded-t-lg">
           <p>Delivery Address</p>
         </div>
@@ -120,13 +166,13 @@ export default function Orders({ cart, total }) {
               value={name}
               type="text"
               name="name"
-              className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg w-full"
+              className="border-2 border-gray-300 focus:outline-none focus:border-red-400 p-1 rounded-lg w-full"
               placeholder="Name"
             ></input>
             <input
               onChange={handleChange}
               value={email}
-              className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg w-full"
+              className="border-2 border-gray-300 focus:outline-none focus:border-red-400 p-1 rounded-lg w-full"
               placeholder="Email"
               name="email"
               type="email"
@@ -136,7 +182,7 @@ export default function Orders({ cart, total }) {
             <textarea
               onChange={handleChange}
               value={address}
-              className="w-full p-1 border-2 border-slate-300 focus:outline-none focus:border-red-400 rounded-lg"
+              className="w-full p-1 border-2 border-gray-300 focus:outline-none focus:border-red-400 rounded-lg"
               rows="5"
               cols="33"
               placeholder="Address (Area and Street)"
@@ -148,7 +194,7 @@ export default function Orders({ cart, total }) {
             <input
               onChange={handleChange}
               value={pincode}
-              className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg w-full"
+              className="border-2 border-gray-300 focus:outline-none focus:border-red-400 p-1 rounded-lg w-full"
               placeholder="Pincode"
               name="pincode"
               type="text"
@@ -156,7 +202,7 @@ export default function Orders({ cart, total }) {
             <input
               onChange={handleChange}
               value={phone}
-              className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg w-full"
+              className="border-2 border-gray-300 focus:outline-none focus:border-red-400 p-1 rounded-lg w-full"
               placeholder="Phone"
               name="phone"
               type="text"
@@ -166,7 +212,7 @@ export default function Orders({ cart, total }) {
             <input
               onChange={handleChange}
               value={city}
-              className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg  w-full"
+              className="border-2 border-gray-300 focus:outline-none focus:border-red-400 p-1 rounded-lg  w-full"
               placeholder="City/District/Town"
               name="city"
               type="text"
@@ -175,7 +221,7 @@ export default function Orders({ cart, total }) {
             <input
               onChange={handleChange}
               value={state}
-              className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-1 rounded-lg  w-full"
+              className="border-2 border-gray-300 focus:outline-none focus:border-red-400 p-1 rounded-lg  w-full"
               placeholder="State"
               name="state"
               type="text"
@@ -186,29 +232,30 @@ export default function Orders({ cart, total }) {
       </div>
 
       {/* ORDER SUMMARY */}
-      <div className=" w-full bg-slate-200 rounded-lg">
+      <div className=" w-full bg-gray-200 rounded-lg">
         <div className="bg-red-500 h-8 text-white flex items-center pl-2 rounded-t-lg">
           <p>Order Summary</p>
         </div>
         <div className="p-5 space-y-2">
-          {Object.keys(cart).map((k) => {
+          {Object.keys(items).map((k) => {
             return (
               <div
-                key={cart[k].desc}
+                key={items[k].desc}
                 className="md:w-96 flex space-x-5 justify-between"
               >
-                <p>{cart[k].desc}</p>
-                <p>₹{cart[k].price}</p>
+                <p>{items[k].desc}</p>
+                <p>₹{items[k].price}</p>
               </div>
             );
           })}
-          <div className="md:w-96 flex justify-between border-y-2 border-slate-600 py-2">
+          <div className="md:w-96 flex justify-between border-y-2 border-gray-600 py-2">
             <p className="font-bold">Total</p>
             <p className="font-bold">₹{total}</p>
           </div>
           <div className="pt-5">
             <button
               onClick={initializePayments}
+              disabled={disabled}
               className="disabled:bg-red-400 bg-red-500 px-5 py-2 text-white text-base rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300"
             >
               Proceed for Payment

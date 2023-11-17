@@ -26,7 +26,6 @@ function Login() {
       body: JSON.stringify(data),
     });
     let res = await response.json();
-    console.log(res);
     if (res.success == "true") {
       localStorage.setItem("token", res.token);
       toast.success("Your are successfully logged in", {

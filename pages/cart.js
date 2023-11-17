@@ -12,82 +12,118 @@ function Cart({
   addCart,
   clearCart,
   removeFromCart,
+  deleteFromCart,
   saveDataCart,
+  setItemDB,
+  itemDB,
 }) {
   const [items, setItems] = useState("");
   const router = useRouter();
   useEffect(() => {
     const getCartItems = async () => {
-      const item = localStorage.getItem("token");
-      const decoded = await jwtDecode(item);
+      if (!user) {
+        setItems(cart);
+        return;
+      } else {
+        const item = localStorage.getItem("token");
+        const decoded = await jwtDecode(item);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_HOST}/api/getCart`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ decoded }),
+          },
+        );
+        const res = await response.json();
+        setItems(res.cartItem);
+        saveDataCart(res.cartItem);
+        setItemDB(res.cartItem);
+      }
+    };
+    getCartItems();
+    // eslint-disable-next-line
+  }, [items]);
+
+  const removeCartItems = async (k) => {
+    if (!user) {
+      removeFromCart(
+        k,
+        items[k].desc,
+        items[k].qty,
+        items[k].color,
+        items[k].size,
+        items[k].price,
+      );
+      return;
+    } else {
+      const ID = items[k]._id;
+      const email = items[k].email;
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_HOST}/api/getCart`,
+        `${process.env.NEXT_PUBLIC_HOST}/api/removeCart`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ decoded }),
+          body: JSON.stringify({ ID, email }),
         },
       );
       const res = await response.json();
-      setItems(res.cartItem);
-      saveDataCart(res.cartItem);
-    };
-    getCartItems();
-    // eslint-disable-next-line
-  }, [!items]);
-
-  const removeCartItems = async (k) => {
-    const ID = items[k]._id;
-    const email = items[k].email;
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_HOST}/api/removeCart`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ID, email }),
-      },
-    );
-    const res = await response.json();
-    console.log(res);
-    refreshVariant(res.cartItem);
+      refreshVariant(res.cartItem);
+    }
   };
 
   const addCartItems = async (k) => {
-    const email = items[k].email;
-    const itemCode = items[k].itemCode;
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_HOST}/api/addCart`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    if (!user) {
+      addCart(
+        k,
+        items[k].desc,
+        items[k].qty,
+        items[k].color,
+        items[k].size,
+        items[k].price,
+      );
+      return;
+    } else {
+      const email = items[k].email;
+      const itemCode = items[k].itemCode;
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_HOST}/api/addCart`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, itemCode }),
         },
-        body: JSON.stringify({ email, itemCode }),
-      },
-    );
-    const res = await response.json();
-    refreshVariant(res.cartItem);
+      );
+      const res = await response.json();
+      refreshVariant(res.cartItem);
+    }
   };
 
   const deleteCartItems = async (k) => {
-    const email = items[k].email;
-    const ID = items[k]._id;
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_HOST}/api/deleteCart`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    if (!user) {
+      deleteFromCart(k);
+    } else {
+      const email = items[k].email;
+      const ID = items[k]._id;
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_HOST}/api/deleteCart`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, ID }),
         },
-        body: JSON.stringify({ email, ID }),
-      },
-    );
-    const res = await response.json();
-    refreshVariant(res.cartItem);
+      );
+      const res = await response.json();
+      refreshVariant(res.cartItem);
+    }
   };
 
   const refreshVariant = (newItem) => {
@@ -171,7 +207,10 @@ function Cart({
           </div>
           <div>
             <Link href="/orders">
-              <button className="bg-red-500 hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring focus:ring-red-300 p-2 rounded-md text-base text-white z-0 w-full md:text-lg">
+              <button
+                disabled={Object.keys(items).length === 0 ? true : false}
+                className="disabled:bg-red-300 bg-red-500 hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring focus:ring-red-300 p-2 rounded-md text-base text-white z-0 w-full md:text-lg"
+              >
                 Proceed to Buy
               </button>
             </Link>

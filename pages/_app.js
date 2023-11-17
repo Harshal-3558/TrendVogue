@@ -13,8 +13,9 @@ const nunito = Nunito({
 
 export default function App({ Component, pageProps }) {
   const [cart, setCart] = useState({}); // State for shopping cart
+  const [itemDB, setItemDB] = useState({}); // State for shopping cart fetching from DB
   const [total, setTotal] = useState(0); // State for total price
-  const [user, setUser] = useState({ value: null }); // State for user data
+  const [user, setUser] = useState(""); // State for user data
   const [key, setKey] = useState(0); // State for re-rendering component
   const [progress, setProgress] = useState(0); // State for top loading bar
   const router = useRouter();
@@ -44,7 +45,7 @@ export default function App({ Component, pageProps }) {
     // Get user data from local storage
     const token = localStorage.getItem("token");
     if (token) {
-      setUser({ value: token });
+      setUser(token);
     }
     setKey(Math.random());
     // eslint-disable-next-line
@@ -53,7 +54,7 @@ export default function App({ Component, pageProps }) {
   // Logout user
   const logout = () => {
     localStorage.removeItem("token");
-    setUser({ value: null });
+    setUser("");
     setKey(Math.random());
   };
 
@@ -109,6 +110,19 @@ export default function App({ Component, pageProps }) {
     saveCart(newCart);
   };
 
+  //Delete item from cart
+  const deleteFromCart = (itemCode) => {
+    let cart = JSON.parse(localStorage.getItem("cart"));
+
+    // Check if the item exists in the cart
+    if (itemCode in cart) {
+      delete cart[itemCode];
+      localStorage.setItem("cart", JSON.stringify(cart));
+      setCart(cart);
+      saveCart(cart);
+    }
+  };
+
   // Buy item now
   const buyNow = (itemCode, desc, qty, color, size, price, img) => {
     let newCart = { itemCode: { qty: 1, price, desc, size, color, img } };
@@ -135,6 +149,7 @@ export default function App({ Component, pageProps }) {
           addCart={addCart}
           clearCart={clearCart}
           removeFromCart={removeFromCart}
+          itemDB={itemDB}
           buyNow={buyNow}
         />
         <Component
@@ -145,6 +160,9 @@ export default function App({ Component, pageProps }) {
           addCart={addCart}
           clearCart={clearCart}
           removeFromCart={removeFromCart}
+          deleteFromCart={deleteFromCart}
+          setItemDB={setItemDB}
+           itemDB={itemDB}
           buyNow={buyNow}
           {...pageProps}
         />

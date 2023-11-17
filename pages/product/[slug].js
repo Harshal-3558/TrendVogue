@@ -15,6 +15,8 @@ export default function Page({
   addCart,
   buyNow,
   user,
+  cart,
+  setItemDB,
 }) {
   const router = useRouter();
   const slug = router.query.slug;
@@ -24,6 +26,10 @@ export default function Page({
   const [size, setSize] = useState(product.size);
 
   const addToCart = async (itemCode, desc, qty, color, size, price, img) => {
+    if (!user) {
+      addCart(itemCode, desc, qty, color, size, price, img);
+      return;
+    }
     const item = localStorage.getItem("token");
     const decoded = await jwtDecode(item);
     const email = decoded.email;
@@ -47,6 +53,7 @@ export default function Page({
       },
     );
     const res = await response.json();
+    setItemDB(res.cartItem);
   };
 
   const handleService = async () => {
