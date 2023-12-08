@@ -5,7 +5,9 @@ const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const handler = async (req, res) => {
   if (req.method == "POST") {
     try {
-      await cart.deleteMany({ email: req.body.decoded.email });
+      if (req.body.user == true) {
+        await cart.deleteMany({ email: req.body.decoded.email });
+      }
       const session = await stripe.checkout.sessions.retrieve(
         req.body.session_id,
       );

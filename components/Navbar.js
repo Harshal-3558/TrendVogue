@@ -17,7 +17,7 @@ import {
   FaArrowRightFromBracket,
   FaBagShopping,
 } from "react-icons/fa6";
-import { useRef, useState } from "react";
+import { useRef,useState} from "react";
 
 export default function Navbar({ user, logout, cart, itemDB }) {
   const [drop, setDrop] = useState(false);

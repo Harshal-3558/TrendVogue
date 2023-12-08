@@ -125,7 +125,8 @@ export default function App({ Component, pageProps }) {
 
   // Buy item now
   const buyNow = (itemCode, desc, qty, color, size, price, img) => {
-    let newCart = { itemCode: { qty: 1, price, desc, size, color, img } };
+    let newCart = cart;
+    newCart[itemCode] = { qty: 1, price, desc, size, color, img };
     setCart(newCart);
     saveCart(newCart);
     router.push("/orders");
@@ -162,7 +163,7 @@ export default function App({ Component, pageProps }) {
           removeFromCart={removeFromCart}
           deleteFromCart={deleteFromCart}
           setItemDB={setItemDB}
-           itemDB={itemDB}
+          itemDB={itemDB}
           buyNow={buyNow}
           {...pageProps}
         />

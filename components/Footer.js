@@ -3,6 +3,7 @@ import logo from "../public/logo1.png";
 import Link from "next/link";
 
 export default function Footer() {
+  
   return (
     <>
       <footer className="bg-white pt-4 sm:pt-6 lg:pt-8">

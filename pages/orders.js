@@ -15,6 +15,8 @@ export default function Orders({ cart, total, saveDataCart, user }) {
   const [state, setState] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [items, setItems] = useState("");
+  const [userExist, setUserExist] = useState(false);
+  const [executionCount, setExecutionCount] = useState(0);
   const handleChange = async (e) => {
     if (e.target.name == "email") {
       setEmail(e.target.value);
@@ -81,62 +83,88 @@ export default function Orders({ cart, total, saveDataCart, user }) {
         progress: undefined,
         theme: "colored",
       });
-    }
-    const data = { items, email, address };
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_HOST}/api/preTransaction`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      },
-    );
-    const res = await response.json();
-    if (res.success === "true") {
-      router.push(res.url);
     } else {
-      toast.error(res.message, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-    }
-  }
-
-  useEffect(() => {
-    const getCartItems = async () => {
-      const item = localStorage.getItem("token");
-      const decoded = await jwtDecode(item);
+      const data = { items, email, address, userExist };
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_HOST}/api/getCart`,
+        `${process.env.NEXT_PUBLIC_HOST}/api/preTransaction`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ decoded }),
+          body: JSON.stringify(data),
         },
       );
       const res = await response.json();
-      setItems(res.cartItem);
-      saveDataCart(res.cartItem);
-    };
+      if (res.success === "true") {
+        router.push(res.url);
+      } else {
+        toast.error(res.message, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    }
+  }
 
-    const getUserDetails = async () => {
-      const item = localStorage.getItem("token");
-      const decoded = await jwtDecode(item);
-      setEmail(decoded.email);
-      setName(decoded.name);
+  useEffect(() => {
+    const getCartItems = async () => {
+      if (!user) {
+        setItems(cart);
+        return;
+      } else {
+        setUserExist(true);
+        const item = localStorage.getItem("token");
+        const decoded = await jwtDecode(item);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_HOST}/api/getCart`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ decoded }),
+          },
+        );
+        const res = await response.json();
+        setItems(res.cartItem);
+        saveDataCart(res.cartItem);
+
+        const getUserDetails = async () => {
+          const item = localStorage.getItem("token");
+          const decoded = await jwtDecode(item);
+          setEmail(decoded.email);
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_HOST}/api/getUserDetails`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ email }),
+            },
+          );
+          const res = await response.json();
+          const value = await res.Users[0];
+          if (value) {
+            setAddress(value.address);
+            setPhone(value.phone);
+            setName(value.name);
+          }
+        };
+        if (user && executionCount < 5) {
+          getUserDetails();
+          setExecutionCount(executionCount + 1);
+        }
+      }
     };
     getCartItems();
-    getUserDetails();
     // eslint-disable-next-line
   }, [!items]);
 

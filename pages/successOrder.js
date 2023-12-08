@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { FaCircleCheck, FaTruck, FaMoneyCheck,FaReceipt,FaCube,FaTruckFast,FaCheck  } from "react-icons/fa6";
+import { FaCircleCheck, FaTruck, FaMoneyCheck } from "react-icons/fa6";
 import { useRouter } from "next/router";
 import { jwtDecode } from "jwt-decode";
-// import { Stepper, Step, Button, Typography } from "@material-tailwind/react";
+import Link from "next/link";
 
-export default function SuccessOrder({ itemDB }) {
+export default function SuccessOrder({ user, clearCart }) {
   const router = useRouter();
   const { session_id } = router.query;
   const [order, setOrder] = useState("");
@@ -13,20 +13,19 @@ export default function SuccessOrder({ itemDB }) {
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
 
-  // const [activeStep, setActiveStep] = React.useState(0);
-  // const [isLastStep, setIsLastStep] = React.useState(false);
-  // const [isFirstStep, setIsFirstStep] = React.useState(false);
-
-  // const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 2);
-  // const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
-
   useEffect(() => {
     if (!router.isReady) {
       return;
     }
     async function Transaction() {
-      const item = localStorage.getItem("token");
-      const decoded = await jwtDecode(item);
+      let data;
+      if (user) {
+        const item = localStorage.getItem("token");
+        const decoded = await jwtDecode(item);
+        data = { session_id, decoded, user: true };
+      } else {
+        data = { session_id, user: false };
+      }
       const response2 = await fetch(
         `${process.env.NEXT_PUBLIC_HOST}/api/postTransaction`,
         {
@@ -34,7 +33,7 @@ export default function SuccessOrder({ itemDB }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ session_id, decoded }),
+          body: JSON.stringify(data),
         },
       );
       let res2 = await response2.json();
@@ -45,13 +44,14 @@ export default function SuccessOrder({ itemDB }) {
       const timestamp = res2.order.updatedAt;
       const dateOnly = new Date(timestamp).toISOString().split("T")[0];
       setDate(dateOnly);
+      clearCart();
     }
     Transaction();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.isReady]);
 
   return (
-    <div className="bg-gray-200 ">
+    <div className="bg-gray-200 py-4">
       <div className="py-4 flex justify-center">
         <div className="space-y-5">
           <div className="flex justify-center">
@@ -116,66 +116,13 @@ export default function SuccessOrder({ itemDB }) {
         </div>
       </div>
 
-      {/*<div className="w-full px-24 py-4">
-        <Stepper
-          activeStep={activeStep}
-          isLastStep={(value) => setIsLastStep(value)}
-          isFirstStep={(value) => setIsFirstStep(value)}
-        >
-          <Step onClick={() => setActiveStep(0)}>
-            <FaReceipt  className="h-5 w-5" />
-            <div className="absolute -bottom-[3rem] w-max text-center">
-              <Typography
-                variant="h5"
-                color={activeStep === 0 ? "blue-gray" : "gray"}
-              >
-                Order Received
-              </Typography>
-            </div>
-          </Step>
-          <Step onClick={() => setActiveStep(1)}>
-            <FaCube  className="h-5 w-5" />
-            <div className="absolute -bottom-[3rem] w-max text-center">
-              <Typography
-                variant="h5"
-                color={activeStep === 0 ? "blue-gray" : "gray"}
-              >
-                Processed
-              </Typography>
-            </div>
-          </Step>
-          <Step onClick={() => setActiveStep(2)}>
-            <FaTruckFast  className="h-5 w-5" />
-            <div className="absolute -bottom-[3rem] w-max text-center">
-              <Typography
-                variant="h5"
-                color={activeStep === 0 ? "blue-gray" : "gray"}
-              >
-                Shipped
-              </Typography>
-            </div>
-          </Step>
-          <Step onClick={() => setActiveStep(3)}>
-            <FaCheck className="h-5 w-5" />
-            <div className="absolute -bottom-[3rem] w-max text-center">
-              <Typography
-                variant="h5"
-                color={activeStep === 0 ? "blue-gray" : "gray"}
-              >
-                Package Delivered
-              </Typography>
-            </div>
-          </Step>
-        </Stepper>
-        <div className="mt-32 flex justify-between">
-          <Button onClick={handlePrev} disabled={isFirstStep}>
-            Prev
-          </Button>
-          <Button onClick={handleNext} disabled={isLastStep}>
-            Next
-          </Button>
-        </div>
-      </div>*/}
+      <div className="m-2 flex justify-center">
+        <Link href={"/"}>
+          <button className="bg-red-500 py-2 px-4 text-xl rounded-lg text-white hover:bg-red-400">
+            Continue Shopping
+          </button>
+        </Link>
+      </div>
     </div>
   );
 }

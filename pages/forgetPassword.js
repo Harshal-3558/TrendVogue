@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { React, useContext, useState } from "react";
+import { React } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from "next/router";
 
 function forgetPassword() {
   return (

@@ -10,8 +10,12 @@ const handler = async (req, res) => {
 
       // To check whether the cart is not tampered
       for (let item in cart) {
-        const product1 = await product.findOne({ slug: cart[item].itemCode });
-        // console.log(product1);
+        let product1;
+        if (req.body.userExist == true) {
+          product1 = await product.findOne({ slug: cart[item].itemCode });
+        } else {
+          product1 = await product.findOne({ slug: item });
+        }
         if (product1.price != cart[item].price) {
           res.status(500).json({
             success: "false",
@@ -62,7 +66,7 @@ const handler = async (req, res) => {
     } catch (e) {
       res
         .status(500)
-        .json({ success: "false", message: "Your cart is empty !" });
+        .json({ success: "false", message: "Your cart is empty !", order: e });
     }
   } else {
     res.status(405).json({ error: "Method Not Allowed" });
