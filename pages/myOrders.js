@@ -31,7 +31,7 @@ function MyOrders({}) {
   return (
     <div className="my-8">
       <div className="ml-20 text-3xl font-bold text-red-500">Your Orders</div>
-      <section className="container px-4 mx-auto">
+      <section className="container px-4 mx-auto overflow-x-auto">
         <div className="flex flex-col">
           <div className="mx-4 my-2 sm:mx-6 lg:mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">

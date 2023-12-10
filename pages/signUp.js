@@ -27,7 +27,6 @@ function SignUp() {
       body: JSON.stringify(data),
     });
     let res = await response.json();
-    console.log(res);
     if (res.success === "Success") {
       toast.success("Your account is created", {
         position: "top-center",

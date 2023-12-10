@@ -38,7 +38,6 @@ export default function App({ Component, pageProps }) {
         saveCart(JSON.parse(localStorage.getItem("cart")));
       }
     } catch (err) {
-      console.error(err);
       localStorage.clear();
     }
 

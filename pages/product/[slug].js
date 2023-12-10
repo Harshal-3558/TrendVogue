@@ -239,7 +239,7 @@ export default function Page({
               )}
             </div>
           </div>
-          <div className="space-y-3 border-b-4 py-4">
+          <div className="md:space-y-3 space-x-3 md:space-x-0 border-b-4 py-4">
             {stock < 1 ? (
               <h1 className="text-red-500 font-bold text-lg">
                 Currently Out of Stock !
@@ -270,7 +270,7 @@ export default function Page({
                   theme: "colored",
                 });
               }}
-              className="bg-red-500 disabled:bg-red-400 px-9 md:px-5 md:me-7 py-2 text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300"
+              className="bg-red-500 disabled:bg-red-400 px-7 md:px-5 md:me-7 py-2 text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300"
             >
               ADD TO CART
             </button>
@@ -300,7 +300,7 @@ export default function Page({
             <div>
               <div className="border-2 border-slate-200 px-2 py-2 md:py-1 md:w-fit space-x-2 rounded-lg">
                 <input
-                  className="focus:outline-none md:text-sm w-64 md:w-56"
+                  className="focus:outline-none md:text-sm w-60 md:w-56"
                   placeholder="Enter Pincode"
                   onChange={changePin}
                 ></input>

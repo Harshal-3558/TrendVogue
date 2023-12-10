@@ -55,17 +55,17 @@ export default function SuccessOrder({ user, clearCart }) {
       <div className="py-4 flex justify-center">
         <div className="space-y-5">
           <div className="flex justify-center">
-            <FaCircleCheck className="text-9xl text-green-500" />
+            <FaCircleCheck className="text-7xl md:text-9xl text-green-500" />
           </div>
-          <h1 className="text-4xl font-extrabold">
+          <h1 className="text-2xl md:text-4xl font-extrabold">
             Your Order Placed Successfully
           </h1>
         </div>
       </div>
-      <div className="flex justify-center space-x-8 py-7">
-        <div className="w-96 bg-white rounded-lg">
+      <div className="flex flex-col md:justify-center space-y-5 mx-2 md:space-y-0 md:mx-0 md:space-x-8 py-7">
+        <div className="md:w-96 bg-white rounded-lg">
           <div className="flex items-center space-x-3 bg-gray-400 p-2 rounded-t-lg">
-            <FaTruck className="text-3xl text-red-600" />
+            <FaTruck className="text-2xl md:text-3xl text-red-600" />
             <p className="font-semibold">Shipping Address</p>
           </div>
           <div className="p-2">
@@ -73,9 +73,9 @@ export default function SuccessOrder({ user, clearCart }) {
           </div>
         </div>
 
-        <div className="w-96 bg-white rounded-lg">
+        <div className="md:w-96 bg-white rounded-lg">
           <div className="flex items-center space-x-3 bg-gray-400 p-2 rounded-t-lg">
-            <FaMoneyCheck className="text-3xl text-red-600" />
+            <FaMoneyCheck className="text-2xl md:text-3xl text-red-600" />
             <p className="font-semibold">Order Details</p>
           </div>
           <div className="p-2 space-y-2">
@@ -89,14 +89,16 @@ export default function SuccessOrder({ user, clearCart }) {
             </div>
             <div className="flex justify-between items-center">
               <p>Order Status</p>
-              <p className="bg-green-500 px-3 py-1 rounded-2xl">Delivered</p>
+              <p className="bg-yellow-500 text-white px-3 py-1 rounded-2xl">
+                Pending
+              </p>
             </div>
           </div>
         </div>
 
-        <div className="w-96 bg-white rounded-lg">
+        <div className="md:w-96 bg-white rounded-lg">
           <div className="flex items-center space-x-3 bg-gray-400 p-2 rounded-t-lg">
-            <FaMoneyCheck className="text-3xl text-red-600" />
+            <FaMoneyCheck className="text-2xl md:text-3xl text-red-600" />
             <p className="font-semibold">Payment Details</p>
           </div>
           <div className="p-2 space-y-2">

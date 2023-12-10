@@ -25,7 +25,7 @@ export default function Home() {
   ]);
 
   // Initialize the second Embla Carousel instance
-  const [emblaRef1, emblaApi1] = useEmblaCarousel({ loop: true }, [
+  const [emblaRef1] = useEmblaCarousel({ loop: true }, [
     Autoplay(autoplayOptions),
   ]);
 

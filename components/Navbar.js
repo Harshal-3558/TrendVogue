@@ -17,7 +17,7 @@ import {
   FaArrowRightFromBracket,
   FaBagShopping,
 } from "react-icons/fa6";
-import { useRef,useState} from "react";
+import { useRef, useState } from "react";
 
 export default function Navbar({ user, logout, cart, itemDB }) {
   const [drop, setDrop] = useState(false);
@@ -105,10 +105,13 @@ export default function Navbar({ user, logout, cart, itemDB }) {
 
             {/* Login & Logout */}
             {user ? (
-              <FaCircleUser
-                className="text-3xl hover:text-red-500 cursor-pointer"
-                onClick={toggleDropdown}
-              />
+              <div>
+                <FaCircleUser
+                  className="hidden md:block text-3xl hover:text-red-500 cursor-pointer"
+                  onClick={toggleDropdown}
+                />
+                <FaCircleUser className="md:hidden text-3xl hover:text-red-500 cursor-pointer" />
+              </div>
             ) : (
               <Link href="/login">
                 <button className="bg-red-500 px-6 py-1 text-lg text-white rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300">
@@ -151,7 +154,7 @@ export default function Navbar({ user, logout, cart, itemDB }) {
               </div>
             )}
             {Object.keys(product).length !== 0 ? (
-              <span class="absolute top-4 right-3 flex h-3 w-3">
+              <span class="absolute top-3 right-2 md:top-4 md:right-3 flex h-3 w-3">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
               </span>
@@ -203,22 +206,41 @@ export default function Navbar({ user, logout, cart, itemDB }) {
               <span>Home</span>
             </div>
           </Link>
-          <div className="flex space-x-3 items-center p-3 hover:bg-gray-200 rounded-lg">
-            <FaUser />
-            <span>My Account</span>
-          </div>
-          <div className="flex space-x-3 items-center p-3 hover:bg-gray-200 rounded-lg">
-            <FaBoxOpen />
-            <span>My Orders</span>
-          </div>
-          <div className="flex space-x-3 items-center p-3 hover:bg-gray-200 rounded-lg">
-            <FaGear />
-            <span>Settings</span>
-          </div>
-          <div className="flex space-x-3 items-center p-3 hover:bg-gray-200 rounded-lg">
-            <FaArrowRightFromBracket />
-            <span>Log Out</span>
-          </div>
+          {user ? (
+            <Link href={"/account"} onClick={toggleCart}>
+              <div className="flex space-x-3 items-center p-3 hover:bg-gray-200 rounded-lg">
+                <FaUser />
+                <span>My Account</span>
+              </div>
+            </Link>
+          ) : (
+            ""
+          )}
+          {user ? (
+            <Link href={"/myOrders"} onClick={toggleCart}>
+              <div className="flex space-x-3 items-center p-3 hover:bg-gray-200 rounded-lg">
+                <FaBoxOpen />
+                <span>My Orders</span>
+              </div>
+            </Link>
+          ) : (
+            ""
+          )}
+          {user ? (
+            <Link
+              href={"/"}
+              onClick={() => {
+                logout();
+              }}
+            >
+              <div className="flex space-x-3 items-center p-3 hover:bg-gray-200 rounded-lg">
+                <FaArrowRightFromBracket />
+                <span>Log Out</span>
+              </div>
+            </Link>
+          ) : (
+            ""
+          )}
         </div>
       </aside>
     </>
