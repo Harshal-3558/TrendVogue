@@ -150,6 +150,39 @@ export default function Page({
                     }`}
                   ></button>
                 )}
+                {Object.keys(variant).includes("green") &&
+                Object.keys(variant["green"]).includes(size) && (
+                  <button
+                    onClick={() => {
+                      refreshVariant("green", size);
+                    }}
+                    className={` h-12 w-12 bg-green-600 rounded-full border-4 ${
+                      color === "green" ? "border-gray-400" : "border-slate-100"
+                    }`}
+                  ></button>
+                )}
+                {Object.keys(variant).includes("pink") &&
+                Object.keys(variant["pink"]).includes(size) && (
+                  <button
+                    onClick={() => {
+                      refreshVariant("pink", size);
+                    }}
+                    className={` h-12 w-12 bg-pink-600 rounded-full border-4 ${
+                      color === "pink" ? "border-gray-400" : "border-slate-100"
+                    }`}
+                  ></button>
+                )}
+                {Object.keys(variant).includes("purple") &&
+                Object.keys(variant["purple"]).includes(size) && (
+                  <button
+                    onClick={() => {
+                      refreshVariant("purple", size);
+                    }}
+                    className={` h-12 w-12 bg-purple-600 rounded-full border-4 ${
+                      color === "purple" ? "border-gray-400" : "border-slate-100"
+                    }`}
+                  ></button>
+                )}
               {Object.keys(variant).includes("red") &&
                 Object.keys(variant["red"]).includes(size) && (
                   <button

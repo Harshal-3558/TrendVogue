@@ -1,9 +1,52 @@
 import Link from "next/link";
-import { React } from "react";
+import { React, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function forgetPassword() {
+function ForgetPassword() {
+  const [email, setEmail] = useState("");
+  function handleChange(e) {
+    if (e.target.name == "email") {
+      setEmail(e.target.value);
+    }
+  }
+  async function handleSubmit(e) {
+    console.log(email)
+    e.preventDefault();
+    const data = { email };
+    const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/forgot`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    let res = await response.json();
+    if (res.success == true) {
+      toast.success("Check your mail for reset link", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } else {
+      toast.error("User does not exist", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+    setEmail("");
+  }
   return (
     <>
       <div className="flex justify-center">
@@ -33,10 +76,11 @@ function forgetPassword() {
           </div>
           <form method="POST" className="px-2 space-y-5 text-base md:text-lg">
             <div>
-              <label className="block" for="name">
+              <label className="block" htmlFor="name">
                 Email address
               </label>
               <input
+                onChange={handleChange}
                 type="email"
                 name="email"
                 id="name"
@@ -46,6 +90,7 @@ function forgetPassword() {
             </div>
 
             <button
+              onClick={handleSubmit}
               type="submit"
               className=" w-full p-2 text-base bg-red-500 text-white rounded-lg md:text-lg"
             >
@@ -58,4 +103,4 @@ function forgetPassword() {
   );
 }
 
-export default forgetPassword;
+export default ForgetPassword;

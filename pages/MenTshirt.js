@@ -52,7 +52,7 @@ export async function getStaticProps() {
   }
   
   // Retrieve all products from the database
-  let products = await product.find();
+  let products = await product.find({ category : "Male" });
   
   // Initialize the "tshirt" object
   let tshirt = {};
