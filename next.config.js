@@ -13,4 +13,5 @@ module.exports = {
       "th.bing.com",
     ],
   },
+  target: 'serverless',
 };
