@@ -45,7 +45,7 @@ function MenTshirt({ products }) {
 }
 
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   // Check if the mongoose connection is ready, if not, connect to the MongoDB database
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
