@@ -7,7 +7,7 @@ const handler = async (req, res) => {
     const { name, email } = req.body;
     const pass = CryptoJS.AES.encrypt(
       req.body.password,
-      "ecommerce"
+      process.env.JWT_SECRET_KEY
     ).toString();
     let u = new user({ name, email, password: pass });
     await u.save();

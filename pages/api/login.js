@@ -8,10 +8,14 @@ const handler = async (req, res) => {
     let u = await user.findOne({ email: req.body.email });
     if (u) {
       // Decryption form DB
-      const pass = CryptoJS.AES.decrypt(u.password, "ecommerce");
+      const pass = CryptoJS.AES.decrypt(u.password, process.env.JWT_SECRET_KEY);
       const decryptedPass = JSON.parse(pass.toString(CryptoJS.enc.Utf8));
       if (req.body.password == decryptedPass) {
-        const token = jwt.sign({ email: u.email, name: u.name }, "ecommerce",{ expiresIn: '2d' });
+        const token = jwt.sign(
+          { email: u.email, name: u.name },
+          process.env.JWT_SECRET_KEY,
+          { expiresIn: "2d" },
+        );
         res.status(200).json({ success: "true", token });
       } else {
         res.status(400).json({ error: "Error" });

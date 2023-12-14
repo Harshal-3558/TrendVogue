@@ -182,15 +182,6 @@ export default function Footer() {
                       href="#"
                       className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
                     >
-                      Investor Relations
-                    </a>
-                  </div>
-
-                  <div>
-                    <a
-                      href="#"
-                      className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
-                    >
                       Jobs
                     </a>
                   </div>
@@ -218,15 +209,6 @@ export default function Footer() {
                       className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
                     >
                       Contact
-                    </a>
-                  </div>
-
-                  <div>
-                    <a
-                      href="#"
-                      className="text-gray-500 transition duration-100 hover:text-red-500 active:text-red-600"
-                    >
-                      Documentation
                     </a>
                   </div>
 

@@ -1,12 +1,14 @@
 import Link from "next/link";
-import { React, useContext, useState } from "react";
+import { React, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 
 function SignUp() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
   function handleChange(e) {
     if (e.target.name == "email") {
       setEmail(e.target.value);
@@ -42,6 +44,9 @@ function SignUp() {
     setEmail("");
     setName("");
     setPassword("");
+    setTimeout(() => {
+      router.push("/");
+    }, 2002);
   }
   return (
     <>
@@ -76,7 +81,7 @@ function SignUp() {
             className="px-2 space-y-3 md:space-y-5 text-base md:text-lg"
           >
             <div>
-              <label className="block" for="name">
+              <label className="block" htmlFor="name">
                 Email address
               </label>
               <input
@@ -90,7 +95,7 @@ function SignUp() {
               />
             </div>
             <div>
-              <label className="block" for="name">
+              <label className="block" htmlFor="name">
                 Name
               </label>
               <input
@@ -104,7 +109,7 @@ function SignUp() {
               />
             </div>
             <div>
-              <label className="block" for="name">
+              <label className="block" htmlFor="name">
                 Password
               </label>
               <input
@@ -121,9 +126,9 @@ function SignUp() {
               <input type="checkbox" className="w-4 h-4 accent-red-500 " />
               <p className="">
                 I accept the{" "}
-                <a className="text-red-600" href="www.google.com">
+                <span className="text-red-600">
                   Terms and Conditions
-                </a>
+                </span>
               </p>
             </div>
             <button

@@ -11,7 +11,7 @@ function ForgetPassword() {
     }
   }
   async function handleSubmit(e) {
-    console.log(email)
+    console.log(email);
     e.preventDefault();
     const data = { email };
     const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/forgot`, {
@@ -62,14 +62,14 @@ function ForgetPassword() {
           pauseOnHover={false}
           theme="colored"
         />
-        <div className="p-2 border my-16 bg-white rounded-lg shadow-lg md:w-1/2 md:p-5">
-          <div className="space-y-3">
+        <div className="p-2 border my-16 bg-white rounded-lg shadow-lg w-80 md:w-1/2 md:p-5">
+          <div className="md:space-y-3">
             <h1 className="text-2xl text-center font-bold md:text-3xl">
               Forgot Password
             </h1>
             <p className="text-center font-semibold">
               Or{" "}
-              <Link className="text-red-600" href={"/signUp"}>
+              <Link className="text-red-600" href={"/login"}>
                 Login
               </Link>
             </p>

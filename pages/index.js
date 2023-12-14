@@ -74,13 +74,13 @@ export default function Home() {
               </div>
 
               <button
-                className="embla__prev text-4xl absolute top-96 left-5 text-black bg-gray-100 bg-opacity-40 rounded-full p-3"
+                className="embla__prev md:text-4xl absolute top-48 left-3 md:top-96 md:left-5 text-black bg-gray-100 bg-opacity-40 rounded-full p-3"
                 onClick={scrollPrev}
               >
                 <FaChevronLeft />
               </button>
               <button
-                className="embla__next text-4xl absolute top-96 right-5 text-black bg-gray-100 bg-opacity-40 rounded-full p-3"
+                className="embla__next md:text-4xl absolute top-48 right-3 md:top-96 md:right-5 text-black bg-gray-100 bg-opacity-40 rounded-full p-3"
                 onClick={scrollNext}
               >
                 <FaChevronRight />
@@ -147,7 +147,7 @@ export default function Home() {
                   className="group relative flex h-52 md:h-96 items-end overflow-hidden rounded-xl bg-gray-100 p-4 shadow-lg"
                 >
                   <Image
-                    src="https://images.bewakoof.com/t1080/hanya-mask-premium-glass-case-for-apple-iphone-15-pro-max-621031-1695390167-1.jpg?tr=q-100"
+                    src="https://images.bewakoof.com/t1080/ultimate-marvel-small-backpack-585129-1680613572-1.jpg"
                     width={1200}
                     height={500}
                     loading="lazy"
@@ -157,7 +157,7 @@ export default function Home() {
 
                   <div className="relative flex w-full flex-col rounded-lg bg-red-500 p-2 md:p-4 text-center">
                     <span className="md:text-lg font-bold text-white lg:text-2xl">
-                      Mobile Covers
+                      Accessories
                     </span>
                   </div>
                 </Link>

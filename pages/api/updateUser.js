@@ -7,7 +7,7 @@ const handler = async (req, res) => {
       { email: req.body.email },
       { name: req.body.name, address: req.body.address, phone: req.body.phone},
     );
-    res.status(200).json({ success: "Success" });
+    res.status(200).json({ success: true });
   } else {
     res.status(400).json({ error: "Error" });
   }

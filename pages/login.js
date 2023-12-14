@@ -101,7 +101,7 @@ function Login() {
             className="px-2 space-y-5 text-base md:text-lg"
           >
             <div>
-              <label className="block" for="name">
+              <label className="block" htmlFor="name">
                 Email address
               </label>
               <input
@@ -115,7 +115,7 @@ function Login() {
               />
             </div>
             <div>
-              <label className="block" for="name">
+              <label className="block" htmlFor="name">
                 Password
               </label>
               <input

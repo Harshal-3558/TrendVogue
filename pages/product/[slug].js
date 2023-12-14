@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import { FaStar, FaLocationDot } from "react-icons/fa6";
 const mongoose = require("mongoose");
 import product from "@/models/product";
@@ -147,6 +147,17 @@ export default function Page({
                     }}
                     className={` h-12 w-12 bg-black rounded-full border-4 ${
                       color === "black" ? "border-gray-400" : "border-slate-100"
+                    }`}
+                  ></button>
+                )}
+                {Object.keys(variant).includes("yellow") &&
+                Object.keys(variant["yellow"]).includes(size) && (
+                  <button
+                    onClick={() => {
+                      refreshVariant("yellow", size);
+                    }}
+                    className={` h-12 w-12 bg-yellow-500 rounded-full border-4 ${
+                      color === "yellow" ? "border-gray-400" : "border-slate-100"
                     }`}
                   ></button>
                 )}

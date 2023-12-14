@@ -9,7 +9,7 @@ function MyOrders({}) {
   useEffect(() => {
     const getOrder = async () => {
       const item = localStorage.getItem("token");
-      const decoded = await jwtDecode(item);
+      const decoded = jwtDecode(item);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_HOST}/api/getOrders`,
         {

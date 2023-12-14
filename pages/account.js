@@ -1,5 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Account({}) {
   const [name, setName] = useState("");
@@ -66,6 +68,31 @@ function Account({}) {
       },
     );
     const res = await response.json();
+    if (res.success == true) {
+      toast.success("Password change successfully", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } else {
+      toast.error("Please enter valid password", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+    setPrePassword("")
+    setNewPassword("")
   };
 
   const initiateChange = async () => {
@@ -80,15 +107,39 @@ function Account({}) {
       },
     );
     const res = await response.json();
+    if (res.success == true) {
+      toast.success("Profile updated successfully", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
   };
   return (
     <div className="bg-slate-100 py-7 md:py-12 flex justify-center">
+    <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="colored"
+      />
       <div className="border rounded-lg m-2 p-3 md:p-5 shadow-xl bg-white space-y-6 md:space-y-12 md:w-[1000px]">
         {/*Heading*/}
         <div>
           <p className="text-xl md:text-2xl font-extrabold">Account Settings</p>
           <p className="text-sm md:text-base">
-            Manage your name, password and account settings.
+            Manage your name, address and password.
           </p>
         </div>
         <div className="space-y-6">
@@ -168,6 +219,7 @@ function Account({}) {
               <p className="font-bold md:w-36 w-28">Password</p>
               <input
                 onChange={handleChange}
+                value={prePassword}
                 type="password"
                 name="pre_password"
                 className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-2 rounded-lg w-full md:w-1/2"
@@ -178,6 +230,10 @@ function Account({}) {
             <div className="flex md:space-x-6 items-center text-sm md:text-base">
               <p className="font-bold md:w-36 w-28">New Password</p>
               <input
+                onChange={handleChange}
+                value={newPassword}
+                type="password"
+                name="new_password"
                 className="border-2 border-slate-300 focus:outline-none focus:border-red-400 p-2 rounded-lg w-full md:w-1/2"
                 placeholder="Enter your new password"
               ></input>
@@ -187,7 +243,7 @@ function Account({}) {
                 onClick={changePassword}
                 className="bg-red-500 mt-6 md:mt-0 md:px-7 px-5 py-2 text-white text-base rounded-lg hover:bg-red-400 focus:outline-none focus:ring focus:ring-red-300"
               >
-                Save Changes
+                Change Password
               </button>
             </div>
           </div>

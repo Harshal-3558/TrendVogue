@@ -5,6 +5,7 @@ import { Nunito } from "next/font/google";
 import { React, useState, useEffect } from "react";
 import LoadingBar from "react-top-loading-bar";
 import { useRouter } from "next/router";
+import { jwtDecode } from "jwt-decode";
 const nunito = Nunito({
   weight: "400",
   subsets: ["latin"],
@@ -16,6 +17,7 @@ export default function App({ Component, pageProps }) {
   const [itemDB, setItemDB] = useState({}); // State for shopping cart fetching from DB
   const [total, setTotal] = useState(0); // State for total price
   const [user, setUser] = useState(""); // State for user data
+  const [name, setName] = useState("");
   const [key, setKey] = useState(0); // State for re-rendering component
   const [progress, setProgress] = useState(0); // State for top loading bar
   const router = useRouter();
@@ -45,6 +47,8 @@ export default function App({ Component, pageProps }) {
     const token = localStorage.getItem("token");
     if (token) {
       setUser(token);
+      const decoded = jwtDecode(token);
+      setName(decoded.name);
     }
     setKey(Math.random());
     // eslint-disable-next-line
@@ -55,6 +59,7 @@ export default function App({ Component, pageProps }) {
     localStorage.removeItem("token");
     setUser("");
     setKey(Math.random());
+    router.push("/");
   };
 
   // Add item to cart
@@ -142,6 +147,7 @@ export default function App({ Component, pageProps }) {
         />
         <Navbar
           logout={logout}
+          name={name}
           user={user}
           key={key}
           cart={cart}

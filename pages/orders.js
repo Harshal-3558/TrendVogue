@@ -121,7 +121,7 @@ export default function Orders({ cart, total, saveDataCart, user }) {
       } else {
         setUserExist(true);
         const item = localStorage.getItem("token");
-        const decoded = await jwtDecode(item);
+        const decoded = jwtDecode(item);
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_HOST}/api/getCart`,
           {
@@ -138,7 +138,7 @@ export default function Orders({ cart, total, saveDataCart, user }) {
 
         const getUserDetails = async () => {
           const item = localStorage.getItem("token");
-          const decoded = await jwtDecode(item);
+          const decoded = jwtDecode(item);
           setEmail(decoded.email);
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_HOST}/api/getUserDetails`,

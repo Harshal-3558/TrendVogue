@@ -10,6 +10,7 @@ module.exports = {
       "images.unsplash.com",
       "m.media-amazon.com",
       "avatars.githubusercontent.com",
+      "th.bing.com",
     ],
   },
 };
