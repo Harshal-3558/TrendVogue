@@ -4,7 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { jwtDecode } from "jwt-decode";
 
-export default function Orders({ cart, total, saveDataCart, user }) {
+export default function Orders({ cart, total, saveDataCart, user, buy }) {
   const router = useRouter();
   const [name, setName] = useState("");
   const [pincode, setPincode] = useState("");
@@ -135,7 +135,6 @@ export default function Orders({ cart, total, saveDataCart, user }) {
         const res = await response.json();
         setItems(res.cartItem);
         saveDataCart(res.cartItem);
-
         const getUserDetails = async () => {
           const item = localStorage.getItem("token");
           const decoded = jwtDecode(item);

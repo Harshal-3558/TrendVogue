@@ -56,6 +56,38 @@ export default function Page({
     setItemDB(res.cartItem);
   };
 
+  const BuyNow = async (itemCode, desc, qty, color, size, price, img) => {
+    if (!user) {
+      buyNow(itemCode, desc, qty, color, size, price, img);
+      return;
+    }
+    const item = localStorage.getItem("token");
+    const decoded = await jwtDecode(item);
+    const email = decoded.email;
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_HOST}/api/addCart`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          itemCode,
+          desc,
+          qty,
+          color,
+          size,
+          price,
+          img,
+        }),
+      },
+    );
+    const res = await response.json();
+    setItemDB(res.cartItem);
+    router.push("/orders");
+  };
+
   const handleService = async () => {
     let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
     let pinJSON = await pins.json();
@@ -150,18 +182,20 @@ export default function Page({
                     }`}
                   ></button>
                 )}
-                {Object.keys(variant).includes("yellow") &&
+              {Object.keys(variant).includes("yellow") &&
                 Object.keys(variant["yellow"]).includes(size) && (
                   <button
                     onClick={() => {
                       refreshVariant("yellow", size);
                     }}
                     className={` h-12 w-12 bg-yellow-500 rounded-full border-4 ${
-                      color === "yellow" ? "border-gray-400" : "border-slate-100"
+                      color === "yellow"
+                        ? "border-gray-400"
+                        : "border-slate-100"
                     }`}
                   ></button>
                 )}
-                {Object.keys(variant).includes("green") &&
+              {Object.keys(variant).includes("green") &&
                 Object.keys(variant["green"]).includes(size) && (
                   <button
                     onClick={() => {
@@ -172,7 +206,7 @@ export default function Page({
                     }`}
                   ></button>
                 )}
-                {Object.keys(variant).includes("pink") &&
+              {Object.keys(variant).includes("pink") &&
                 Object.keys(variant["pink"]).includes(size) && (
                   <button
                     onClick={() => {
@@ -183,14 +217,16 @@ export default function Page({
                     }`}
                   ></button>
                 )}
-                {Object.keys(variant).includes("purple") &&
+              {Object.keys(variant).includes("purple") &&
                 Object.keys(variant["purple"]).includes(size) && (
                   <button
                     onClick={() => {
                       refreshVariant("purple", size);
                     }}
                     className={` h-12 w-12 bg-purple-600 rounded-full border-4 ${
-                      color === "purple" ? "border-gray-400" : "border-slate-100"
+                      color === "purple"
+                        ? "border-gray-400"
+                        : "border-slate-100"
                     }`}
                   ></button>
                 )}
@@ -321,7 +357,7 @@ export default function Page({
             <button
               disabled={stock < 1 ? true : false}
               onClick={() => {
-                buyNow(
+                BuyNow(
                   slug,
                   product.description,
                   1,

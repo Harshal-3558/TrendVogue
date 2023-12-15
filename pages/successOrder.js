@@ -62,7 +62,7 @@ export default function SuccessOrder({ user, clearCart }) {
           </h1>
         </div>
       </div>
-      <div className="flex flex-col md:justify-center space-y-5 mx-2 md:space-y-0 md:mx-0 md:space-x-8 py-7">
+      <div className="md:flex md:justify-center md:space-x-8 md:space-y-0 md:mx-0 py-7 space-y-5 mx-2">
         <div className="md:w-96 bg-white rounded-lg">
           <div className="flex items-center space-x-3 bg-gray-400 p-2 rounded-t-lg">
             <FaTruck className="text-2xl md:text-3xl text-red-600" />

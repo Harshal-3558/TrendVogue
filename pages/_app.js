@@ -20,6 +20,7 @@ export default function App({ Component, pageProps }) {
   const [name, setName] = useState("");
   const [key, setKey] = useState(0); // State for re-rendering component
   const [progress, setProgress] = useState(0); // State for top loading bar
+  const [buy, setBuy] = useState(false)
   const router = useRouter();
 
   useEffect(() => {
@@ -129,7 +130,7 @@ export default function App({ Component, pageProps }) {
 
   // Buy item now
   const buyNow = (itemCode, desc, qty, color, size, price, img) => {
-    let newCart = cart;
+    let newCart = {}
     newCart[itemCode] = { qty: 1, price, desc, size, color, img };
     setCart(newCart);
     saveCart(newCart);
@@ -170,6 +171,7 @@ export default function App({ Component, pageProps }) {
           setItemDB={setItemDB}
           itemDB={itemDB}
           buyNow={buyNow}
+          buy={buy}
           {...pageProps}
         />
         <Footer />
