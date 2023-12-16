@@ -68,3 +68,7 @@
     var(--brand-secondary)
   );
 }
+
+* {
+    -webkit-tap-highlight-color: transparent;
+}
