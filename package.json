@@ -14,7 +14,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "autoprefixer": "10.4.15",
-    "crypto-js": "^4.1.1",
+    "bcryptjs": "^2.4.3",
     "embla-carousel-autoplay": "^8.0.0-rc13",
     "embla-carousel-react": "^8.0.0-rc13",
     "eslint": "8.48.0",

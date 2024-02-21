@@ -91,8 +91,8 @@ function Account({}) {
         theme: "colored",
       });
     }
-    setPrePassword("")
-    setNewPassword("")
+    setPrePassword("");
+    setNewPassword("");
   };
 
   const initiateChange = async () => {
@@ -122,7 +122,7 @@ function Account({}) {
   };
   return (
     <div className="bg-slate-100 py-7 md:py-12 flex justify-center">
-    <ToastContainer
+      <ToastContainer
         position="top-center"
         autoClose={2000}
         hideProgressBar={false}

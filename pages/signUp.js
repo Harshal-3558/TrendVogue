@@ -126,9 +126,7 @@ function SignUp() {
               <input type="checkbox" className="w-4 h-4 accent-red-500 " />
               <p className="">
                 I accept the{" "}
-                <span className="text-red-600">
-                  Terms and Conditions
-                </span>
+                <span className="text-red-600">Terms and Conditions</span>
               </p>
             </div>
             <button

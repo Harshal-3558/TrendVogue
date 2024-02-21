@@ -1,24 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { FaPlus, FaMinus, FaTrashCan, FaCircleCheck } from "react-icons/fa6";
-import Link from "next/link";
-import Image from "next/image";
 import { jwtDecode } from "jwt-decode";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { FaCircleCheck, FaMinus, FaPlus } from "react-icons/fa6";
 
 function Cart({
   user,
   cart,
   total,
   addCart,
-  clearCart,
   removeFromCart,
   deleteFromCart,
   saveDataCart,
   setItemDB,
-  itemDB,
 }) {
   const [items, setItems] = useState("");
-  const router = useRouter();
   useEffect(() => {
     const getCartItems = async () => {
       if (!user) {

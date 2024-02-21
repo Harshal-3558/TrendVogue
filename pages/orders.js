@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { jwtDecode } from "jwt-decode";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Orders({ cart, total, saveDataCart, user, buy }) {
   const router = useRouter();

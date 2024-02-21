@@ -16,6 +16,7 @@ import {
   FaBagShopping,
 } from "react-icons/fa6";
 import { useRef, useState } from "react";
+import SearchBar from "./SearchBar";
 
 export default function Navbar({ user, logout, cart, itemDB, name }) {
   const [drop, setDrop] = useState(false);
@@ -88,18 +89,7 @@ export default function Navbar({ user, logout, cart, itemDB, name }) {
             </div>
           </div>
           <div className="flex space-x-5 items-center">
-            <div className="hidden md:flex">
-              <input
-                type="text"
-                name="search"
-                id="search"
-                placeholder="search for products..."
-                className="border-2 border-red-600 rounded-l-md text-lg focus:outline-none p-1 w-80"
-              />
-              <button className="bg-red-600 py-1 px-2 rounded-r-md focus:outline-none focus:ring focus:ring-red-300">
-                <FaMagnifyingGlass />
-              </button>
-            </div>
+          <SearchBar/>
 
             {/* Login & Logout */}
             {user ? (

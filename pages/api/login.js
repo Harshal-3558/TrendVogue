@@ -1,16 +1,18 @@
 import connectDB from "@/middleware/mongoose";
 import user from "@/models/user";
-import CryptoJS from "crypto-js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
 const handler = async (req, res) => {
   if (req.method == "POST") {
     let u = await user.findOne({ email: req.body.email });
     if (u) {
       // Decryption form DB
-      const pass = CryptoJS.AES.decrypt(u.password, process.env.JWT_SECRET_KEY);
-      const decryptedPass = JSON.parse(pass.toString(CryptoJS.enc.Utf8));
-      if (req.body.password == decryptedPass) {
+      const isCorrectPassword = await bcrypt.compare(
+        req.body.password,
+        u.password,
+      );
+      if (isCorrectPassword) {
         const token = jwt.sign(
           { email: u.email, name: u.name },
           process.env.JWT_SECRET_KEY,

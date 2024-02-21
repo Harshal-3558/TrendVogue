@@ -9,7 +9,6 @@ function contact() {
             <h1 className="text-2xl font-semibold capitalize lg:text-3xl">
               Get a quote
             </h1>
-
             <p className="max-w-xl mt-6">
               Ask us everything and we would love to hear from you
             </p>

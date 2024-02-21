@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const productSchema = new Schema(
   {
     slug: { type: String, required: true, unique: true },
-    brand: { type: String, require: true },
+    brand: { type: String },
     description: { type: String, require: true },
     img: { type: String, require: true },
     category: { type: String, require: true },
@@ -15,7 +15,7 @@ const productSchema = new Schema(
     delivery: { type: [Number], require: true },
     available: { type: Number, require: true },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default mongoose.models.Product ||
