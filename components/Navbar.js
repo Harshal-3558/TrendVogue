@@ -89,7 +89,9 @@ export default function Navbar({ user, logout, cart, itemDB, name }) {
             </div>
           </div>
           <div className="flex space-x-5 items-center">
-          <SearchBar/>
+          <div className="hidden md:flex justify-center w-96">
+            <SearchBar/>
+          </div>
 
             {/* Login & Logout */}
             {user ? (
@@ -98,7 +100,7 @@ export default function Navbar({ user, logout, cart, itemDB, name }) {
                   className="hidden md:block text-3xl hover:text-red-500 cursor-pointer"
                   onClick={toggleDropdown}
                 />
-                <FaCircleUser className="md:hidden text-3xl hover:text-red-500 cursor-pointer" />
+                <FaCircleUser className="md:hidden text-3xl ms-12 hover:text-red-500 cursor-pointer" />
               </div>
             ) : (
               <Link href="/login">
@@ -151,16 +153,7 @@ export default function Navbar({ user, logout, cart, itemDB, name }) {
           </div>
         </div>
         <div className="flex justify-center md:hidden">
-          <input
-            type="text"
-            name="search"
-            id="search"
-            placeholder="search for products..."
-            className="border-2 border-red-600 rounded-l-md text-lg focus:outline-none p-1 w-full"
-          />
-          <button className="bg-red-600 py-1 px-2 rounded-r-md focus:outline-none focus:ring focus:ring-red-300">
-            <FaMagnifyingGlass />
-          </button>
+          <SearchBar/>
         </div>
       </div>
 
