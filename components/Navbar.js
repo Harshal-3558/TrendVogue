@@ -1,21 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
-import logo from "../public/logo1.png";
-import React, { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
-  FaMagnifyingGlass,
-  FaCircleUser,
-  FaCartShopping,
-  FaBars,
-  FaXmark,
-  FaHouse,
-  FaUser,
-  FaBoxOpen,
-  FaGear,
   FaArrowRightFromBracket,
   FaBagShopping,
+  FaBars,
+  FaBoxOpen,
+  FaCartShopping,
+  FaCircleUser,
+  FaHouse,
+  FaUser,
+  FaXmark,
 } from "react-icons/fa6";
-import { useRef, useState } from "react";
+import logo from "../public/logo1.png";
 import SearchBar from "./SearchBar";
 
 export default function Navbar({ user, logout, cart, itemDB, name }) {
@@ -53,13 +50,15 @@ export default function Navbar({ user, logout, cart, itemDB, name }) {
             <div>
               <FaBars onClick={toggleCart} />
             </div>
-            <div>
+            <Link href={"/"}>
               <Image className="w-full" src={logo} alt="logo" />
-            </div>
+            </Link>
           </div>
           <div className="flex space-x-16 items-center">
             <div className="hidden md:block">
-              <Image className="h-8 w-full" src={logo} alt="logo" />
+              <Link href={"/"}>
+                <Image className="h-8 w-full" src={logo} alt="logo" />
+              </Link>
             </div>
             <div className="hidden md:block md:space-x-4 md:text-lg md:font-semibold md:pt-1">
               <Link
@@ -89,9 +88,9 @@ export default function Navbar({ user, logout, cart, itemDB, name }) {
             </div>
           </div>
           <div className="flex space-x-5 items-center">
-          <div className="hidden md:flex justify-center w-96">
-            <SearchBar/>
-          </div>
+            <div className="hidden md:flex justify-center">
+              <SearchBar />
+            </div>
 
             {/* Login & Logout */}
             {user ? (
@@ -112,7 +111,7 @@ export default function Navbar({ user, logout, cart, itemDB, name }) {
 
             {/* Dropdown Menu */}
             {drop && (
-              <div className="bg-red-100 absolute top-16 right-5 rounded-lg shadow-2xl shadow-gray-400 h-36 w-44 text-lg p-4 space-y-2">
+              <div className="bg-slate-100 absolute top-16 right-14 rounded-lg shadow-2xl shadow-gray-400 h-36 w-44 text-lg p-4 space-y-2">
                 <Link
                   href={"/account"}
                   className="flex space-x-3 items-center hover:text-red-500 cursor-pointer"
@@ -153,7 +152,7 @@ export default function Navbar({ user, logout, cart, itemDB, name }) {
           </div>
         </div>
         <div className="flex justify-center md:hidden">
-          <SearchBar/>
+          <SearchBar />
         </div>
       </div>
 

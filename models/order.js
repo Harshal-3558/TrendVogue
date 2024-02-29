@@ -11,8 +11,7 @@ const orderSchema = new Schema(
     amount: { type: Number, required: true },
     status: { type: String, default: "Pending", required: true },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-// mongoose.models = {};
 export default mongoose.models.Order || mongoose.model("Order", orderSchema);

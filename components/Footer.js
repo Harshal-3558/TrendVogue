@@ -3,33 +3,10 @@ import logo from "../public/logo1.png";
 import Link from "next/link";
 
 export default function Footer() {
-  
   return (
     <>
-      <footer className="bg-white pt-4 sm:pt-6 lg:pt-8">
-        <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
-          <div className="flex flex-col items-center justify-between gap-2 border-b border-t py-6 md:flex-row">
-            <div className="mb-3 text-center md:mb-0 md:text-left">
-              <span className="font-bold uppercase tracking-widest text-gray-800">
-                Newsletter
-              </span>
-              <p className="text-gray-500">Subscribe to our newsletter</p>
-            </div>
-
-            <form className="flex w-full gap-2 md:max-w-md">
-              <input
-                placeholder="Email"
-                className="w-full flex-1 rounded-lg border-2 bg-gray-50 px-3 py-2 text-gray-800 placeholder-gray-500 outline-none ring-red-300 transition duration-100 focus:ring"
-              />
-
-              <button className="inline-block rounded-lg bg-red-500 px-8 py-2 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 md:text-base">
-                Send
-              </button>
-            </form>
-          </div>
-        </div>
-
-        <div className="pt-12">
+      <footer className="bg-white pt-4 sm:pt-6 lg:pt-8 border-t-2">
+        <div className="pt-4">
           <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
             <div className="mb-16 grid grid-cols-2 gap-12 md:grid-cols-4 lg:grid-cols-6 lg:gap-8">
               <div className="col-span-full lg:col-span-2">
@@ -44,7 +21,7 @@ export default function Footer() {
                 </div>
 
                 <p className="mb-6 text-gray-500 sm:pr-8">
-                Fashionable Products for Men and Women
+                  Fashionable Products for Men and Women
                 </p>
 
                 <div className="flex gap-4">

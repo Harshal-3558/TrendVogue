@@ -4,7 +4,6 @@ import Image from "next/image";
 const mongoose = require("mongoose");
 import product from "@/models/product";
 
-
 function MenTshirt({ products }) {
   return (
     <section className="text-gray-600 body-font">
@@ -13,7 +12,10 @@ function MenTshirt({ products }) {
           {Object.keys(products).map((items) => {
             // Iterate over the keys of the 'products' object
             return (
-              <div key={products[items].slug} className="lg:w-1/4 md:w-1/2 p-4 w-full">
+              <div
+                key={products[items].slug}
+                className="lg:w-1/4 md:w-1/2 p-4 w-full"
+              >
                 <Link
                   href={`/product/${products[items].slug}`}
                   className="block relative h-96 rounded-lg overflow-hidden"
@@ -44,16 +46,15 @@ function MenTshirt({ products }) {
   );
 }
 
-
 export async function getServerSideProps() {
   // Check if the mongoose connection is ready, if not, connect to the MongoDB database
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
-  
+
   // Retrieve all products from the database
-  let products = await product.find({ category : "Male" });
-  
+  let products = await product.find({ category: "Male" });
+
   // Initialize the "tshirt" object
   let tshirt = {};
 
@@ -69,7 +70,7 @@ export async function getServerSideProps() {
       ) {
         tshirt[items.description].color.push(items.color);
       }
-      
+
       // If the product size is not already included and the product is available,
       // add the size to the "tshirt" object
       if (
@@ -82,7 +83,7 @@ export async function getServerSideProps() {
       // If the product description does not exist in the "tshirt" object, create a new entry
       // and clone the product object using JSON.stringify and JSON.parse
       tshirt[items.description] = JSON.parse(JSON.stringify(items));
-      
+
       // If the product is available, initialize the color and size arrays in the "tshirt" object
       if (items.available > 0) {
         tshirt[items.description].color = [items.color];
@@ -90,7 +91,7 @@ export async function getServerSideProps() {
       }
     }
   }
-  
+
   // Return the organized products as props
   return { props: { products: JSON.parse(JSON.stringify(tshirt)) } };
 }

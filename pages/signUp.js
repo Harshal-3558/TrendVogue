@@ -1,35 +1,47 @@
 import Link from "next/link";
-import { React, useState } from "react";
+import { React } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup
+  .object({
+    Email: yup.string().email().required(),
+    Name: yup.string().required(),
+    Password: yup
+      .string()
+      .matches(
+        /^(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])(?=.*[0-9]).{6,}$/,
+        "Password must be at least 6 characters long and contain at least one special character",
+      )
+      .required(),
+  })
+  .required();
 
 function SignUp() {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   const router = useRouter();
-  function handleChange(e) {
-    if (e.target.name == "email") {
-      setEmail(e.target.value);
-    } else if (e.target.name == "name") {
-      setName(e.target.value);
-    } else if (e.target.name == "password") {
-      setPassword(e.target.value);
-    }
-  }
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const data = { email, name, password };
+
+  const onSubmit = async (data) => {
+    const { Email, Name, Password } = data;
     const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/signUp`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ Email, Name, Password }),
     });
     let res = await response.json();
-    if (res.success === "Success") {
+    if (res.success) {
       toast.success("Your account is created", {
         position: "top-center",
         autoClose: 2000,
@@ -40,14 +52,23 @@ function SignUp() {
         progress: undefined,
         theme: "colored",
       });
+      setTimeout(() => {
+        router.push("/");
+      }, 2002);
+    } else {
+      toast.error("User already exist", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
-    setEmail("");
-    setName("");
-    setPassword("");
-    setTimeout(() => {
-      router.push("/");
-    }, 2002);
-  }
+  };
+
   return (
     <>
       <div className="flex justify-center">
@@ -76,7 +97,7 @@ function SignUp() {
             </p>
           </div>
           <form
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             method="POST"
             className="px-2 space-y-3 md:space-y-5 text-base md:text-lg"
           >
@@ -85,42 +106,40 @@ function SignUp() {
                 Email address
               </label>
               <input
-                onChange={handleChange}
-                value={email}
-                type="email"
-                name="email"
-                id="email"
                 placeholder="john@example.com"
+                {...register("Email")}
                 className="border-2 p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
               />
+              <span className="text-sm text-red-500">
+                {errors.Email?.message}
+              </span>
             </div>
             <div>
               <label className="block" htmlFor="name">
                 Name
               </label>
               <input
-                onChange={handleChange}
-                value={name}
-                type="text"
-                name="name"
-                id="name"
                 placeholder="Enter name"
+                {...register("Name")}
                 className="border-2 p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
               />
+              <span className="text-sm text-red-500">
+                {errors.Name?.message}
+              </span>
             </div>
             <div>
               <label className="block" htmlFor="name">
                 Password
               </label>
               <input
-                onChange={handleChange}
-                value={password}
                 type="password"
-                name="password"
-                id="password"
                 placeholder="Password"
+                {...register("Password")}
                 className="border-2 p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
               />
+              <span className="text-sm text-red-500">
+                {errors.Password?.message}
+              </span>
             </div>
             <div className="flex space-x-2 items-center">
               <input type="checkbox" className="w-4 h-4 accent-red-500 " />

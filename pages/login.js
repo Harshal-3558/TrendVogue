@@ -1,29 +1,43 @@
 import Link from "next/link";
-import { React, useState } from "react";
+import { React } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup
+  .object({
+    Email: yup.string().email().required(),
+    Password: yup
+      .string()
+      .matches(
+        /^(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])(?=.*[0-9]).{6,}$/,
+        "Password must be at least 6 characters long and contain at least one special character",
+      )
+      .required(),
+  })
+  .required();
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   const router = useRouter();
-  function handleChange(e) {
-    if (e.target.name == "email") {
-      setEmail(e.target.value);
-    } else if (e.target.name == "password") {
-      setPassword(e.target.value);
-    }
-  }
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const data = { email, password };
+
+  const onSubmit = async (data) => {
+    const { Email, Password } = data;
     const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ Email, Password }),
     });
     let res = await response.json();
     if (res.success == "true") {
@@ -64,9 +78,7 @@ function Login() {
         theme: "colored",
       });
     }
-    setEmail("");
-    setPassword("");
-  }
+  };
   return (
     <>
       <div className="flex justify-center">
@@ -96,7 +108,7 @@ function Login() {
           </div>
 
           <form
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             method="POST"
             className="px-2 space-y-5 text-base md:text-lg"
           >
@@ -105,28 +117,27 @@ function Login() {
                 Email address
               </label>
               <input
-                onChange={handleChange}
-                value={email}
-                type="email"
-                name="email"
-                id="name"
                 placeholder="john@example.com"
+                {...register("Email")}
                 className="border-2 p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
               />
+              <span className="text-sm text-red-500">
+                {errors.Email?.message}
+              </span>
             </div>
             <div>
               <label className="block" htmlFor="name">
                 Password
               </label>
               <input
-                onChange={handleChange}
-                value={password}
                 type="password"
-                name="password"
-                id="name"
                 placeholder="Password"
+                {...register("Password")}
                 className="border-2 p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
               />
+              <span className="text-sm text-red-500">
+                {errors.Password?.message}
+              </span>
             </div>
             <div>
               <Link

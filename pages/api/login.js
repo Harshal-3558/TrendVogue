@@ -5,13 +5,11 @@ import bcrypt from "bcryptjs";
 
 const handler = async (req, res) => {
   if (req.method == "POST") {
-    let u = await user.findOne({ email: req.body.email });
+    const { Email, Password } = req.body;
+    let u = await user.findOne({ email: Email });
     if (u) {
       // Decryption form DB
-      const isCorrectPassword = await bcrypt.compare(
-        req.body.password,
-        u.password,
-      );
+      const isCorrectPassword = await bcrypt.compare(Password, u.password);
       if (isCorrectPassword) {
         const token = jwt.sign(
           { email: u.email, name: u.name },
