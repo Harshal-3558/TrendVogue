@@ -11,6 +11,7 @@ module.exports = {
       "m.media-amazon.com",
       "avatars.githubusercontent.com",
       "th.bing.com",
+      "static05.jockey.in"
     ],
   },
 };
