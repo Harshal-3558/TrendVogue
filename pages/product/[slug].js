@@ -15,7 +15,6 @@ export default function Page({
   addCart,
   buyNow,
   user,
-  cart,
   setItemDB,
 }) {
   const router = useRouter();
@@ -31,7 +30,7 @@ export default function Page({
       return;
     }
     const item = localStorage.getItem("token");
-    const decoded = await jwtDecode(item);
+    const decoded = jwtDecode(item);
     const email = decoded.email;
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_HOST}/api/addCart`,
@@ -62,7 +61,7 @@ export default function Page({
       return;
     }
     const item = localStorage.getItem("token");
-    const decoded = await jwtDecode(item);
+    const decoded = jwtDecode(item);
     const email = decoded.email;
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_HOST}/api/addCart`,
@@ -257,7 +256,7 @@ export default function Page({
           <div>
             <p className="font-semibold">SELECT SIZE :</p>
             <div className="flex space-x-3">
-              {Object.keys(variant[color]).includes("S") && (
+              {variant[color] && Object.keys(variant[color]).includes("S") && (
                 <button
                   onClick={() => {
                     refreshVariant(color, "S");
@@ -269,7 +268,7 @@ export default function Page({
                   <p>S</p>
                 </button>
               )}
-              {Object.keys(variant[color]).includes("M") && (
+              {variant[color] && Object.keys(variant[color]).includes("M") && (
                 <button
                   onClick={() => {
                     refreshVariant(color, "M");
@@ -281,7 +280,7 @@ export default function Page({
                   <p>M</p>
                 </button>
               )}
-              {Object.keys(variant[color]).includes("L") && (
+              {variant[color] && Object.keys(variant[color]).includes("L") && (
                 <button
                   onClick={() => {
                     refreshVariant(color, "L");
@@ -293,7 +292,7 @@ export default function Page({
                   <p>L</p>
                 </button>
               )}
-              {Object.keys(variant[color]).includes("XL") && (
+              {variant[color] && Object.keys(variant[color]).includes("XL") && (
                 <button
                   onClick={() => {
                     refreshVariant(color, "XL");
@@ -305,18 +304,19 @@ export default function Page({
                   <p>XL</p>
                 </button>
               )}
-              {Object.keys(variant[color]).includes("2XL") && (
-                <button
-                  onClick={() => {
-                    refreshVariant(color, "2XL");
-                  }}
-                  className={` h-12 w-12 ${
-                    size === "2XL" ? "border-gray-400" : "border-slate-100"
-                  } rounded-lg border-4 text-xl flex justify-center items-center`}
-                >
-                  <p>2XL</p>
-                </button>
-              )}
+              {variant[color] &&
+                Object.keys(variant[color]).includes("2XL") && (
+                  <button
+                    onClick={() => {
+                      refreshVariant(color, "2XL");
+                    }}
+                    className={` h-12 w-12 ${
+                      size === "2XL" ? "border-gray-400" : "border-slate-100"
+                    } rounded-lg border-4 text-xl flex justify-center items-center`}
+                  >
+                    <p>2XL</p>
+                  </button>
+                )}
             </div>
           </div>
           <div className="md:space-y-3 space-x-3 md:space-x-0 border-b-4 py-4">

@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/router";
 
@@ -12,12 +12,19 @@ const schema = yup
     Name: yup.string().required(),
     Email: yup.string().email().required(),
     Address: yup.string().required(),
-    Phone: yup.number().required(),
-    Pincode: yup.number().required(),
+    Phone: yup
+      .string()
+      .matches(/^[0-9]{10}$/, "Phone number should be of 10 digits")
+      .required(),
+    Pincode: yup
+      .number()
+      .min(100000, "Pincode should be of 6 digits")
+      .max(999999, "Pincode should be of 6 digits")
+      .required(),
   })
   .required();
 
-export default function Orders({ cart, total, saveDataCart, user, buy }) {
+export default function Orders({ cart, total, saveDataCart, user }) {
   const {
     register,
     handleSubmit,
@@ -33,9 +40,10 @@ export default function Orders({ cart, total, saveDataCart, user, buy }) {
   const [items, setItems] = useState("");
   const [userExist, setUserExist] = useState(false);
   const router = useRouter();
+  const value = useRef(null);
 
   const handleChange = async (e) => {
-    setValue("Phone", e);
+    setValue("Pincode", e);
     if (e.length == 6) {
       let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
       let pinJSON = await pins.json();
@@ -144,19 +152,23 @@ export default function Orders({ cart, total, saveDataCart, user, buy }) {
             },
           );
           const res = await response.json();
-          const value = await res.Users[0];
-          if (value) {
-            setValue("Name", value.name);
-            setValue("Email", value.email);
-            setValue("Phone", value.phone);
-            setValue("Address", value.address);
-          }
+          value.current = await res.Users[0];
         };
         getUserDetails();
       }
     };
     getCartItems();
   }, [items, email, cart, user, saveDataCart, setValue]);
+
+  useEffect(() => {
+    if (value.current) {
+      setValue("Name", value.current.name);
+      setValue("Email", value.current.email);
+      setValue("Phone", value.current.phone);
+      setValue("Address", value.current.address);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value.current, setValue]);
 
   return (
     <div className="p-4 space-y-4">
@@ -235,8 +247,6 @@ export default function Orders({ cart, total, saveDataCart, user, buy }) {
                   {...register("Phone")}
                   className="border-2 border-gray-300 focus:outline-none focus:border-red-400 p-1 rounded-lg w-full"
                   placeholder="Phone"
-                  name="phone"
-                  type="text"
                 />
                 <span className="text-sm text-red-500">
                   {errors.Phone?.message}

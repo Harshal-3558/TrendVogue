@@ -28,6 +28,7 @@ const handler = async (req, res) => {
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         mode: "payment",
+        customer_email: req.body.email,
         shipping_options: [{ shipping_rate: "shr_1OA8UoSCj43uWdZHMJE0Tz0F" }],
         line_items: Object.keys(cart).map((item) => {
           return {

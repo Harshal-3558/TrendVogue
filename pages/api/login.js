@@ -1,21 +1,25 @@
 import connectDB from "@/middleware/mongoose";
 import user from "@/models/user";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const handler = async (req, res) => {
   if (req.method == "POST") {
     const { Email, Password } = req.body;
-    let u = await user.findOne({ email: Email });
+
+    // Use projection to only retrieve the password and name fields
+    let u = await user.findOne({ email: Email }, 'password name');
+    
     if (u) {
-      // Decryption form DB
       const isCorrectPassword = await bcrypt.compare(Password, u.password);
+      
       if (isCorrectPassword) {
         const token = jwt.sign(
-          { email: u.email, name: u.name },
+          { email: Email, name: u.name },
           process.env.JWT_SECRET_KEY,
           { expiresIn: "2d" },
         );
+        
         res.status(200).json({ success: "true", token });
       } else {
         res.status(400).json({ error: "Error" });
@@ -26,4 +30,4 @@ const handler = async (req, res) => {
   }
 };
 
-export default connectDB(handler); //To check whether connected to DB or not and then it is returned
+export default connectDB(handler);

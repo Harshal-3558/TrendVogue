@@ -8,7 +8,7 @@ const handler = async (req, res) => {
     const decoded = jwtDecode(req.body.token);
     let u = await user.findOne({ email: decoded.email });
     if (u) {
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      const hashedPassword = await bcrypt.hash(req.body.Password, 10);
       const User = await user.findOneAndUpdate(
         { email: decoded.email },
         { password: hashedPassword },

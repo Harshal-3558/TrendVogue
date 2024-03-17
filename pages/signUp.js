@@ -53,7 +53,7 @@ function SignUp() {
         theme: "colored",
       });
       setTimeout(() => {
-        router.push("/");
+        router.push("/login");
       }, 2002);
     } else {
       toast.error("User already exist", {
@@ -140,13 +140,6 @@ function SignUp() {
               <span className="text-sm text-red-500">
                 {errors.Password?.message}
               </span>
-            </div>
-            <div className="flex space-x-2 items-center">
-              <input type="checkbox" className="w-4 h-4 accent-red-500 " />
-              <p className="">
-                I accept the{" "}
-                <span className="text-red-600">Terms and Conditions</span>
-              </p>
             </div>
             <button
               type="submit"

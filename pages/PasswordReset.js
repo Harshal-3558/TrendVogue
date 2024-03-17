@@ -2,8 +2,39 @@ import { useRouter } from "next/router";
 import { React, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+
+const schema = yup
+  .object({
+    Password: yup
+      .string()
+      .matches(
+        /^(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])(?=.*[0-9]).{6,}$/,
+        "Password must be at least 6 characters long and contain at least one special character",
+      )
+      .required(),
+
+    ConfirmPassword: yup
+      .string()
+      .matches(
+        /^(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])(?=.*[0-9]).{6,}$/,
+        "Password must be at least 6 characters long and contain at least one special character",
+      )
+      .required(),
+  })
+  .required();
 
 export default function PasswordReset() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
   const router = useRouter();
   const token = router.query.token;
   const [password, setPassword] = useState("");
@@ -12,9 +43,8 @@ export default function PasswordReset() {
       setPassword(e.target.value);
     }
   }
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const data = { token, password };
+  const onSubmit = async (data) => {
+    const { Password } = data;
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_HOST}/api/forgotPassword`,
       {
@@ -22,7 +52,7 @@ export default function PasswordReset() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ token, Password }),
       },
     );
     let res = await response.json();
@@ -50,7 +80,8 @@ export default function PasswordReset() {
       });
     }
     setPassword("");
-  }
+  };
+
   return (
     <div className="flex justify-center">
       <ToastContainer
@@ -71,41 +102,46 @@ export default function PasswordReset() {
             Reset your password
           </h1>
         </div>
-        <form method="POST" className="px-2 space-y-5 text-base md:text-lg">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          method="POST"
+          className="px-2 space-y-5 text-base md:text-lg"
+        >
           <div>
             <label className="block" htmlFor="name">
               Password
             </label>
             <input
-              onChange={handleChange}
               type="password"
-              name="password"
-              id="password"
-              placeholder="Enter your password"
-              className="border p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+              placeholder="Password"
+              {...register("Password")}
+              className="border-2 p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
             />
+            <span className="text-sm text-red-500">
+              {errors.Password?.message}
+            </span>
           </div>
 
           <div>
             <label className="block" htmlFor="name">
-              Confirm password
+              Confirm Password
             </label>
             <input
-              onChange={handleChange}
               type="password"
-              name="cpassword"
-              id="cpassword"
-              placeholder="Confirm your password"
-              className="border p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+              placeholder="Confirm Password"
+              {...register("ConfirmPassword")}
+              className="border-2 p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
             />
+            <span className="text-sm text-red-500">
+              {errors.ConfirmPassword?.message}
+            </span>
           </div>
 
           <button
-            onClick={handleSubmit}
             type="submit"
             className=" w-full p-2 text-base bg-red-500 text-white rounded-lg md:text-lg"
           >
-            Reset password
+            Reset Password
           </button>
         </form>
       </div>
